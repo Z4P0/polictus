@@ -150,6 +150,12 @@ h1, h2, h3, h4, h5, h6 {
   left: 7.6%;
 }
 
+.error {
+  text-align: center;
+  padding: 1em;
+  background: #b92d19;
+}
+
 h1 {
   font-size: 3.75em;
   text-transform: uppercase;
@@ -221,5 +227,5 @@ input[type="button"]:hover {
 #app {
   text-align: center;
   width: 50%;
-  margin: 0 auto;
+  margin: 0 auto 4em;
 }

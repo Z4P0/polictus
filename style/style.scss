@@ -54,7 +54,7 @@ footer {
 }
 .content {
 	margin-bottom: 3em;
-	@include mq(netbook) {margin-top: 6em; }
+	@include mq(netbook) {margin-top: 6em;}
 	@include transition(margin-top, 0.3s);
 }
 input[type="text"] {
@@ -81,5 +81,5 @@ input[type="button"] {
 #app {
 	text-align: center;
 	width: 50%;
-	margin: 0 auto;
+	margin: 0 auto 4em;
 }

@@ -15,34 +15,41 @@ app.main = (function(){
 
 	function init (){
 		console.log("initializing!");
+		document.getElementById('zipcode').addEventListener('keypress', function (e) {if (e.keyCode === 13) validate(); }, false)
 
 		var submitButton = $("#submitButton");
 		var sunLightData;
 		var openSecretData;
 
 		submitButton.click(function(){
-			var zipQuery = $("#queryBox").val();
-
-			$.ajax({
-			  url: SUNLIGHT_API_URL + 'legislators/' + 'locate?zip='+ zipQuery +'&apikey=' + SUNLIGHT_API_KEY ,
-			  context: document.body
-			}).done(function(data) {
-				console.log(data);
-				buildResults(data);
-				// buildSunlight(data);
-			});
+			validate();
 		});
 
 		
+	}
+	function callAPIs(){
+
+		var zipQuery = $("#zipcode").val();
+
+		$.ajax({
+		  url: SUNLIGHT_API_URL + 'legislators/' + 'locate?zip='+ zipQuery +'&apikey=' + SUNLIGHT_API_KEY ,
+		  context: document.body
+		}).done(function(data) {
+			console.log(data);
+
+			buildResults(data);
+			// buildSunlight(data);
+		});
 	}
 	function buildResults(sunLightData){
 		var SLData = sunLightData;
 		var SLResults = SLData.results;
 
-		var target = $("section#main.content div.wrapper");
+		var target = $("#results");
 
 		// var OSData;
 		// var legislators = [];
+		target.html("");
 
 		for (var i = 0; i < SLResults.length; i++) {
 			var fName = SLResults[i].first_name;
@@ -58,20 +65,22 @@ app.main = (function(){
 			var state = SLResults[i].state_name;
 			var website = SLResults[i].website;
 
-			var html ="";
+			var resultsHTML ="";
 
-			html += "<article>";
-			html += "<h2>" + title + " " + fName + " " + lName +"</h2>";
-			html += "<p>";
-			html += "Office Address: " + officeAddress + ", " + state + "<br>";
-			html += "Phone: " + phone + "<br>";
-			html += "Party: " + party + "<br>";
+			resultsHTML += "<article>";
+			resultsHTML += "<h2>" + title + " " + fName + " " + lName +"</h2>";
+			resultsHTML += "<p>";
+			resultsHTML += "Office Address: " + officeAddress + ", " + state + "<br>";
+			resultsHTML += "Phone: " + phone + "<br>";
+			resultsHTML += "Party: " + party + "<br>";
 
-			html += "<a href='" + website + "'>Website</a>";
-			html += "</p>";
-			html += "</article>";
+			resultsHTML += "<a href='" + website + "'>Website</a>";
+			resultsHTML += "</p>";
+			resultsHTML += "</article>";
 
-			target.append(html);
+			// clear(target);
+
+			target.append(resultsHTML);
 
 
 			// $.ajax({
@@ -87,40 +96,64 @@ app.main = (function(){
 
 
 	}
-	function buildSunlight(data){
-		var target = $("section#main.content div.wrapper");
-		var results = data.results;
-		var curPage = data.page.page;
+	function validate() {
+		// get DOM value
+		var input = document.getElementById('zipcode').value;
+		
+		// make sure it's a string
+		if (typeof input === 'string') {
+			// test for an empty string
+			if (input.length === 0 ) { reportError('Please enter a zipcode to begin. Try 14411'); }
+			else {
+				// trim empty space off of the beginning and end
+				var trimmedInput = trim(input);
+				if (trimmedInput.length !== 5) reportError('There is a problem with the input you have entered');
+				else {
+					var isValid = true;
+					// make sure the input is a zipcode
+					for (var i = 0; i < trimmedInput.length; i++) {
+						// if they can't be parses to ints, it's not valid
+						if (!parseInt(trimmedInput[i])) isValid = false;
+					};
+					
+					// now that we tested it..
+					if (isValid) callAPIs();
+					else reportError('There is a problem with the zipcode you entered: '+trimmedInput+' is not a valid zipcode.');
+				}
+			}
+		}
+		// idk how you would get to the error below but whatevs
+		else {reportError('you done goofed');}
+	}
 
-		console.log(data);
-		// console.log(results.length);
-
-		for (var i = 0; i < results.length; i++) {
-			var result = results[i];
-			console.log(result);
-			var html = "";
-
-			var billTitle = result.official_title;
-			var introDate = result.introduced_on;
-			var pages = result.last_version.pages;
-			var link = result.urls.congress;
-
-			html += "<article>";
-			html += "<h2>" + billTitle + "</h2>";
-			html += "<p>";
-			html += "Introduced on: " + introDate + "<br>";
-			html += "Number of pages: " + pages + "<br>";
-			html += "<a href='" + link + "'>Link</a>";
-			html += "</p>";
-			html += "</article>";
-
-			target.append(html);
+	// prints out error message to user
+	function reportError(_text) {
+		// get DOM reference
+		var output = document.getElementById('results');
+		// clear the node
+		clear(output);
+		// appened msg to output
+		p = document.createElement('p');
+		p.className += 'error';
+		p.appendChild(document.createTextNode(_text));
+		output.appendChild(p);
+		// console.log(_text);
+	}
 
 
-		};
-
-
-
+	/* utils */
+	/* =================================== */
+	// trim empty space
+	function trim(str) {
+		// source:
+		// http://stackoverflow.com/questions/3000649/trim-spaces-from-start-and-end-of-string
+	  return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+	}
+	// clear nodes
+	function clear(_element) {
+	  while( _element.hasChildNodes() ) {
+	    _element.removeChild( _element.firstChild );
+	  }
 	}
 
 	//Public interface

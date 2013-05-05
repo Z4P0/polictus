@@ -23,7 +23,7 @@
     <div class="wrapper">
       <article id="app">
       	<p>Enter your zipcode to find your representatives</p>
-      	<input type="text" placeholder=" ex. 14411" id="queryBox"><br>
+      	<input id="zipcode" type="text" placeholder=" ex. 14411" maxlength="5"><br>
       	<input type="button" value="Submit" id="submitButton">
       </article>
       <!-- empty container -->
@@ -37,5 +37,71 @@
     </div>
   </footer>
 </div>
+
+<script>
+document.getElementById('zipcode').addEventListener('keypress', function (e) {if (e.keyCode === 13) validate(); }, false);
+
+
+	/* check form input */
+function validate() {
+	// get DOM value
+	var input = document.getElementById('zipcode').value;
+	
+	// make sure it's a string
+	if (typeof input === 'string') {
+		// test for an empty string
+		if (input.length === 0 ) { reportError('Please enter a zipcode to begin. Try 14411'); }
+		else {
+			// trim empty space off of the beginning and end
+			var trimmedInput = trim(input);
+			if (trimmedInput.length !== 5) reportError('There is a problem with the input you have entered');
+			else {
+				var isValid = true;
+				// make sure the input is a zipcode
+				for (var i = 0; i < trimmedInput.length; i++) {
+					// if they can't be parses to ints, it's not valid
+					if (!parseInt(trimmedInput[i])) isValid = false;
+				};
+				
+				// now that we tested it..
+				if (isValid) console.log('call API');
+				else reportError('There is a problem with the zipcode you entered: '+trimmedInput+' is not a valid zipcode.');
+			}
+		}
+	}
+	// idk how you would get to the error below but whatevs
+	else {reportError('you done goofed');}
+}
+
+// prints out error message to user
+function reportError(_text) {
+	// get DOM reference
+	var output = document.getElementById('results');
+	// clear the node
+	clear(output);
+	// appened msg to output
+	p = document.createElement('p');
+	p.className += 'error';
+	p.appendChild(document.createTextNode(_text));
+	output.appendChild(p);
+	// console.log(_text);
+}
+
+
+/* utils */
+/* =================================== */
+// trim empty space
+function trim(str) {
+	// source:
+	// http://stackoverflow.com/questions/3000649/trim-spaces-from-start-and-end-of-string
+  return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+}
+// clear nodes
+function clear(_element) {
+  while( _element.hasChildNodes() ) {
+    _element.removeChild( _element.firstChild );
+  }
+}
+</script>
 </body>
 </html>
