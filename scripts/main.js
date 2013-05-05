@@ -113,9 +113,14 @@ app.main = (function(){
 					// make sure the input is a zipcode
 					for (var i = 0; i < trimmedInput.length; i++) {
 						// if they can't be parses to ints, it's not valid
-						if (!parseInt(trimmedInput[i])) isValid = false;
-					};
-					
+						if (!parseInt(trimmedInput[i])) {
+							isValid = false;
+
+							// weird error when zipcodes start with 0
+							if (parseInt(trimmedInput[i]) === 0) isValid = true;
+						}
+					} // end for loop
+
 					// now that we tested it..
 					if (isValid) callAPIs();
 					else reportError('There is a problem with the zipcode you entered: '+trimmedInput+' is not a valid zipcode.');
