@@ -1,0 +1,85 @@
+@import "pieces/normalize";
+@import "pieces/vars";
+@import "pieces/functions";
+
+/* base styles */
+@import "pieces/base";
+
+h1, h2, h3, h4, h5, h6 {
+ font-family: "Abraham Lincoln";
+}
+@import "pieces/classes";
+
+// Traditional scale //
+// --
+// 6  = 0.375em
+// 7  = 0.4375em
+// 8  = 0.5em
+// 9  = 0.5625em
+// 10 = 0.625em
+// 11 = 0.6875em
+// 12 = 0.75em
+// 14 = 0.875em
+// 16 = 1em
+// 18 = 1.125em
+// 21 = 1.3125em
+// 24 = 1.5em
+// 36 = 2.25em
+// 48 = 3em
+// 60 = 3.75em
+// 72 = 4.5em
+
+h1 {
+	font-size: 3.75em;
+	text-transform: uppercase;
+	font-weight: normal;
+	line-height: 1.1;
+	margin-bottom: 0;
+}
+header {
+	text-align: center;
+	margin-bottom: 2em;
+	p {font-size: 0.875em; }
+}
+footer {
+	font-size: 0.6875em;
+	text-align: center;
+	padding: 1em;
+	@include mq(netbook) {
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		right: 0;
+	}
+}
+.content {
+	margin-bottom: 3em;
+	@include mq(netbook) {margin-top: 6em; }
+	@include transition(margin-top, 0.3s);
+}
+input[type="text"] {
+	text-align: center;
+	padding: 0.5em 2.25em;
+	width: 50%;
+	max-width: 15em;
+	border-radius: 0.625em;
+}
+input[type="button"] {
+	$blue : #3a7cdb;
+	background-color: $blue;
+	color: #eee;
+	border: none;
+	padding: 0.5em 2.25em;
+	border-radius: 0.625em;
+	@include transition(background-color, 0.3s);
+	&:hover {
+		cursor: pointer;
+		text-shadow: 0 1px 3px #444;
+		background-color: lighten($blue, 10%);
+	}
+}
+#app {
+	text-align: center;
+	width: 50%;
+	margin: 0 auto;
+}

@@ -1,0 +1,19 @@
+/**
+ * base styles
+ */
+
+body {
+  -webkit-font-smoothing: antialiased;
+  font: 100% Georgia, Baskerville, "Times New Roman", serif;
+  line-height: 1.4;
+  color: $text;
+  background: $background;
+}
+p {
+	// max-width: 35em;
+	margin: 0 0 1em;
+}
+ul {
+	padding-left: 0;
+}
+input {margin-bottom: 1em; }

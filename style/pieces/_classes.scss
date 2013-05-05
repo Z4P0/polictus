@@ -1,0 +1,31 @@
+.wrapper {
+	position: relative;
+	width: 80%;
+	max-width: 1024px;
+	margin: 0 auto;
+}
+.cf:before,
+.cf:after {
+  content: " ";
+  display: table;
+}
+.cf:after {clear: both;}
+.inline, .inline li {display: inline-block;}
+.assistive-text {
+	// based off of styles in wordpress theme twentyeleven
+	position:absolute !important;
+	clip:rect(1px 1px 1px 1px);
+	clip:rect(1px, 1px, 1px, 1px);
+}
+.assistive-text:active,
+.assistive-text:focus {
+	background:#eee;
+	border-bottom:1px solid #ddd;
+	color:#1982d1;
+	clip:auto !important;
+	font-size:12px;
+	position:absolute;
+	text-decoration:underline;
+	top:0;
+	left:7.6%;
+}

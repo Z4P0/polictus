@@ -1,1 +1,225 @@
-/*style rules go here!*/
+/* normalize.css v2.1.0 | MIT License | git.io/normalize */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary {
+  display: block;
+}
+
+audio, canvas, video {
+  display: inline-block;
+}
+
+[hidden] {
+  display: none;
+}
+
+html {
+  font-family: sans-serif;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+a:focus {
+  outline: thin dotted;
+}
+
+a:active, a:hover {
+  outline: 0;
+}
+
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+b, strong {
+  font-weight: bold;
+}
+
+dfn {
+  font-style: italic;
+}
+
+hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+
+q {
+  quotes: "\201C" "\201D" "\2018" "\2019";
+}
+
+small {
+  font-size: 80%;
+}
+
+sub, sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sup {
+  top: -0.5em;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+img {
+  border: 0;
+}
+
+svg:not(:root) {
+  overflow: hidden;
+}
+
+/* base styles */
+/**
+ * base styles
+ */
+body {
+  -webkit-font-smoothing: antialiased;
+  font: 100% Georgia, Baskerville, "Times New Roman", serif;
+  line-height: 1.4;
+  color: white;
+  background: #222222;
+}
+
+p {
+  margin: 0 0 1em;
+}
+
+ul {
+  padding-left: 0;
+}
+
+input {
+  margin-bottom: 1em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Abraham Lincoln";
+}
+
+.wrapper {
+  position: relative;
+  width: 80%;
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+.cf:before,
+.cf:after {
+  content: " ";
+  display: table;
+}
+
+.cf:after {
+  clear: both;
+}
+
+.inline, .inline li {
+  display: inline-block;
+}
+
+.assistive-text {
+  position: absolute !important;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+}
+
+.assistive-text:active,
+.assistive-text:focus {
+  background: #eee;
+  border-bottom: 1px solid #dddddd;
+  color: #1982d1;
+  clip: auto !important;
+  font-size: 12px;
+  position: absolute;
+  text-decoration: underline;
+  top: 0;
+  left: 7.6%;
+}
+
+h1 {
+  font-size: 3.75em;
+  text-transform: uppercase;
+  font-weight: normal;
+  line-height: 1.1;
+  margin-bottom: 0;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 2em;
+}
+header p {
+  font-size: 0.875em;
+}
+
+footer {
+  font-size: 0.6875em;
+  text-align: center;
+  padding: 1em;
+}
+@media only screen and (min-width: 768px) {
+  footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+}
+
+.content {
+  margin-bottom: 3em;
+  -webkit-transition: margin-top 0.3s ease-out;
+  -moz-transition: margin-top 0.3s ease-out;
+  -o-transition: margin-top 0.3s ease-out;
+  transition: margin-top 0.3s ease-out;
+}
+@media only screen and (min-width: 768px) {
+  .content {
+    margin-top: 6em;
+  }
+}
+
+input[type="text"] {
+  text-align: center;
+  padding: 0.5em 2.25em;
+  width: 50%;
+  max-width: 15em;
+  border-radius: 0.625em;
+}
+
+input[type="button"] {
+  background-color: #3a7cdb;
+  color: #eee;
+  border: none;
+  padding: 0.5em 2.25em;
+  border-radius: 0.625em;
+  -webkit-transition: background-color 0.3s ease-out;
+  -moz-transition: background-color 0.3s ease-out;
+  -o-transition: background-color 0.3s ease-out;
+  transition: background-color 0.3s ease-out;
+}
+input[type="button"]:hover {
+  cursor: pointer;
+  text-shadow: 0 1px 3px #444444;
+  background-color: #6599e3;
+}
+
+#app {
+  text-align: center;
+  width: 50%;
+  margin: 0 auto;
+}
