@@ -14,6 +14,15 @@ h1, h2, h3, h4, h5, h6 {
  font-family: "Abraham Lincoln";
 }
 @import "pieces/classes";
+.more-info {
+	color: inherit;
+	text-decoration: none;
+	border-bottom: 1px dotted;
+	@include transition(border-bottom, 0.1s);
+	&:hover {
+		border-color: $background;
+	}
+}
 
 h1 {
 	font-size: 3.75em;
@@ -31,6 +40,7 @@ footer {
 	font-size: 0.6875em;
 	text-align: center;
 	padding: 1em;
+	background-color: $background;
 	@include mq(netbook) {
 		position: fixed;
 		bottom: 0;
@@ -50,6 +60,24 @@ input[type="text"] {
 	max-width: 15em;
 	border-radius: 0.625em;
 }
+// Traditional scale //
+// --
+// 6  = 0.375em
+// 7  = 0.4375em
+// 8  = 0.5em
+// 9  = 0.5625em
+// 10 = 0.625em
+// 11 = 0.6875em
+// 12 = 0.75em
+// 14 = 0.875em
+// 16 = 1em
+// 18 = 1.125em
+// 21 = 1.3125em
+// 24 = 1.5em
+// 36 = 2.25em
+// 48 = 3em
+// 60 = 3.75em
+// 72 = 4.5em
 input[type="button"] {
 	$blue : #3a7cdb;
 	background-color: $blue;
@@ -57,6 +85,7 @@ input[type="button"] {
 	border: none;
 	padding: 0.5em 2.25em;
 	border-radius: 0.625em;
+	margin-bottom: 2.25em;
 	@include transition(background-color, 0.3s);
 	&:hover {
 		cursor: pointer;
