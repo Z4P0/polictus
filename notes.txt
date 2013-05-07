@@ -1,0 +1,82 @@
+start:
+	determine which representatives to show (geolocation or zipcode)
+
+	show:
+		basic info on their reps.
+		short bio?
+		definitely a picture
+			might have to use wikipedia for this one..
+			well we need wikipedia anyways
+				when we look up financial backers it would be great to post the quick summary about that person/entitity
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+dope:
+	bill information:
+	http://www.govtrack.us/developers/api
+	plotical players:
+	http://data.influenceexplorer.com/api/aggregates/contributions/?r
+
+idea:
+	submit your email
+	select some basic interests
+		- email notifications will be sent when there is a bill introduced that might affect your interests
+		(drug war, internet freedom [cispa], gay marriage, gun control)
+
+
+Full Name
+[picture]
+political info
+contanct info
+social media
+- the other things are saved to make calls to other APIs
+
+
+
+
+
+
+
+
+Unique ID: The bioguide_id will be present and unique for all members of Congress. It is an official ID, assigned by Congress, and is the most suitable for use as a unique ID.
+
+
+Don't Use Zipcodes
+===================================
+http://sunlightfoundation.com/blog/2012/01/19/dont-use-zipcodes/
+
+A zip code may intersect multiple Congressional districts, so locating by zip may return multiple representatives, and possibly more than 2 senators if the zip code crosses state borders.
+
+The first complication is probably obvious: zip codes and congressional districts aren't the same thing. A zip code can span more than one district (or even more than one state!), so if you want to support zip lookups for your users, you'll have to support cases where more than one matching district is returned. 
+
+Zip codes are lines, in other words, while congressional districts are polygons. This means that mapping zips to congressional districts is an inherently imperfect process.
+
+The government uses something called a zip code tabulation area (ZCTA) to approximate the geographic footprint of a given zip as a polygon, and this is what we use to map zip codes to congressional districts. But it really is just an approximation -- it's far from perfect.
+
+
+It's much better to skip the zip code step entirely and simply look up your location against the congressional district shapefiles published by the Census Bureau using a precise geographic coordinate pair instead of a hazy, vague zip code. Thanks to the Chicago Tribune News App Team's excellent Boundary Service project, we offer exactly this capability. If you can, we strongly encourage you to get a precise latitude/longitude pair from your users (either by geolocating them or geocoding their full address), then use it to determine their representatives.
+
+----------------------------
+
+so lat and long # are better..
+there are geo-locate options within the browser itself we can use to get that information..
+if they don't want to allow the browser to determine that for them automatically maybe we could use google?
+
+
+
+
+
+
+- we output a bunch of stuff to the same element
+	let's get a 'global' var in there?
