@@ -1,9 +1,3 @@
-1. get geocoding to work
-
-
-
-eventually...
-
 polictus = {
 	citizen : {
 		name : "patriot",
@@ -35,18 +29,9 @@ polictus = {
 
 
 
-
-
-get the wiki page for each rep.
-	save each response as a string to a 
-get the img from there
-and summary
-just the raw txt/URL
-
 --
 deal with nicknames (might be tough)
 
-use localStorage to store wiki info (save api calls)
 
 ==
 credits:
@@ -70,23 +55,25 @@ most of the time i hate other people's mark-up. idk why i think mine is any bett
 
 start:
 	is there a polictus object stored locally?
-	yes
-		parse it
-		build gui
-	no:
-		determine which representatives to show [html5 geolocation]
-			if they don't want to share their location
-			or want to search a different location:
-				address geolocation [google]
+		√ yes
+			parse it
+			build gui
+		√ no:
+			√ determine which representatives to show [html5 geolocation]
+				√ if they don't want to share their location
+				√ or want to search a different location:
+					√ address geolocation [google]
 
-		make API calls
-		build polictus object
+			√ build polictus object
+			make API calls
+				√ sunlight
+				√ wikipedia
 
-		show:
-			basic info on their reps. [sunlight]
-			short bio/picture 				[wikipedia]
-			voting history 						[govtrack]
-			influences 								[influenceexplorer]
+			show:
+				basic info on their reps. [sunlight]
+				short bio/picture 				[wikipedia]
+				voting history 						[govtrack]
+				influences 								[influenceexplorer]
 
 
 
