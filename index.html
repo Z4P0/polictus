@@ -1,5 +1,28 @@
 <!DOCTYPE html>
 <html>
+<!-- 
+'''''''''''''''''''''''''''''''',,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+',d;'''ol'''cd''',x:'''dl'''co''::::::::::::::::::::::::::::::::::::::::::::::::
+''''cx,'';k:'''do'''lx,'',x:''':MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+',d;'''ol'''cd''',x:'''dl'''co',xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+''''cx,'';k;'''ol'''lx''',x;'''';;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+',o;','ll',':o',,,d;,,'oc',':o':WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+'':,:o,;,,o,,;'lc,:,:o';,,l;,;';kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+',l,,:'cc,:,;c';;,l;,:'l:':,;c'',,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+''l,;c,::,c,;c'::,l;;c'c:,c,;:';XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+'';,;l,;;;o;,;'c:':,:l':;,l;,;';O00000000000000000000000000000000000000000000000
+',o;'''lc'''co''',d:'''lc'''                           ,,,,,,,,,,,,,,,,,,,,,,,,,
+KKKKKKKKKKKKKKKKKKKKKKKKKKKK          POLICTUS         KKKKKKKKKKKKKKKKKKKKKKKKK
+0000000000000000000000000000                           0000000000000000000000000
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+00000000000000000000000000000000000000000000000000000000000000000000000000000000
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+ -->
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -21,16 +44,25 @@
 
   <section id="main" class="content">
     <div class="wrapper">
-      <article id="app">
-      	<p>Find your elected representatives</p>
-      	<input type="button" value="Start" id="submitButton">
-        <p><small><em>We search by using your geolocation.<br><a href="#" class="more-info">Why not <span class="strike-through">zoidberg</span> zipcodes?</a></em></small></p>
-        <!-- <p>A zip code may intersect multiple Congressional districts, so locating by zip may return multiple representatives, and possibly more than 2 senators if the zip code crosses state borders.</p> -->
-        <!-- zipcodes aren't very accurate. this is a backup if they don't want to use geolocation -->
-        <!-- <input id="zipcode" type="text" placeholder=" ex. 14411" maxlength="5"><br> -->
-      </article>
+      <section id="app">
+        <img src="images/loader.gif">
+        <p><small>Please wait while we load up the application</small></p>
+      </section>
+      <section>
+        <!-- zipcode info -->
+        <article id="zipcode-info">
+          <h2>Don't Use Zipcodes</h2>
+          <p>A zip code may intersect multiple Congressional districts, so locating by zip may return multiple representatives, and possibly more than 2 senators if the zip code crosses state borders.</p>
+          <p>The first complication is probably obvious: zip codes and congressional districts aren't the same thing. A zip code can span more than one district (or even more than one state!), so if you want to support zip lookups for your users, you'll have to support cases where more than one matching district is returned.</p>
+          <p>Zip codes are lines, in other words, while congressional districts are polygons. This means that mapping zips to congressional districts is an inherently imperfect process.</p>
+          <p>The government uses something called a zip code tabulation area (ZCTA) to approximate the geographic footprint of a given zip as a polygon, and this is what we use to map zip codes to congressional districts. But it really is just an approximation -- it's far from perfect.</p>
+          <p><small>Source: <a href="http://sunlightfoundation.com/blog/2012/01/19/dont-use-zipcodes/">Don't Use Zipcodes</a></small></p>
+          <hr>
+        </article>      
+      </section>
       <!-- empty container -->
-      <section id="results"></section>
+      <section id="results">
+      </section>
     </div>
   </section>
 
@@ -41,6 +73,6 @@
   </footer>
 </div>
 <!-- for: geolocating -->
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 </body>
 </html>
