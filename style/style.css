@@ -29,11 +29,11 @@ body {
   box-sizing: border-box;
 }
 
-a:focus {
+a:focus, .mimic_link:focus {
   outline: thin dotted;
 }
 
-a:active, a:hover {
+a:active, .mimic_link:active, a:hover, .mimic_link:hover {
   outline: 0;
 }
 
@@ -99,6 +99,10 @@ body {
   background: #222222;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Abraham Lincoln";
+}
+
 p {
   margin: 0 0 1em;
 }
@@ -111,8 +115,65 @@ input {
   margin-bottom: 1em;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: "Abraham Lincoln";
+a, .mimic_link {
+  color: #b92d19;
+}
+
+h1 {
+  font-size: 3.75em;
+  text-transform: uppercase;
+  font-weight: normal;
+  line-height: 1.1;
+  margin-bottom: 0;
+}
+
+header {
+  text-align: center;
+  padding-bottom: 1em;
+  margin-bottom: 2em;
+}
+header p {
+  font-size: 0.875em;
+}
+
+footer {
+  font-size: 0.6875em;
+  text-align: center;
+  padding: 1em;
+  background-color: #222222;
+}
+@media only screen and (min-width: 768px) {
+  footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+}
+
+input[type="text"] {
+  text-align: center;
+  padding: 0.5em 2.25em;
+  width: 50%;
+  max-width: 15em;
+  border-radius: 0.625em;
+}
+
+input[type="button"] {
+  background-color: #3a7cdb;
+  color: #eee;
+  border: none;
+  padding: 0.5em 2.25em;
+  border-radius: 0.625em;
+  -webkit-transition: background-color 0.3s ease-out;
+  -moz-transition: background-color 0.3s ease-out;
+  -o-transition: background-color 0.3s ease-out;
+  transition: background-color 0.3s ease-out;
+}
+input[type="button"]:hover {
+  cursor: pointer;
+  text-shadow: 0 1px 3px #444444;
+  background-color: #6599e3;
 }
 
 .wrapper {
@@ -164,6 +225,30 @@ h1, h2, h3, h4, h5, h6 {
 .strike-through {
   text-decoration: line-through;
 }
+.strike-through:hover {
+  text-decoration: none;
+}
+
+.center {
+  text-align: center;
+}
+
+.content {
+  padding-bottom: 2em;
+  margin-bottom: 3em;
+  -webkit-transition: margin-top 0.3s ease-out;
+  -moz-transition: margin-top 0.3s ease-out;
+  -o-transition: margin-top 0.3s ease-out;
+  transition: margin-top 0.3s ease-out;
+}
+.content aside {
+  text-align: center;
+}
+@media only screen and (min-width: 768px) {
+  .content {
+    margin-top: 6em;
+  }
+}
 
 .more-info {
   color: inherit;
@@ -176,80 +261,59 @@ h1, h2, h3, h4, h5, h6 {
 }
 .more-info:hover {
   border-color: #222222;
-}
-
-h1 {
-  font-size: 3.75em;
-  text-transform: uppercase;
-  font-weight: normal;
-  line-height: 1.1;
-  margin-bottom: 0;
-}
-
-header {
-  text-align: center;
-  margin-bottom: 2em;
-}
-header p {
-  font-size: 0.875em;
-}
-
-footer {
-  font-size: 0.6875em;
-  text-align: center;
-  padding: 1em;
-  background-color: #222222;
-}
-@media only screen and (min-width: 768px) {
-  footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-  }
-}
-
-.content {
-  margin-bottom: 3em;
-  -webkit-transition: margin-top 0.3s ease-out;
-  -moz-transition: margin-top 0.3s ease-out;
-  -o-transition: margin-top 0.3s ease-out;
-  transition: margin-top 0.3s ease-out;
-}
-@media only screen and (min-width: 768px) {
-  .content {
-    margin-top: 6em;
-  }
-}
-
-input[type="text"] {
-  text-align: center;
-  padding: 0.5em 2.25em;
-  width: 50%;
-  max-width: 15em;
-  border-radius: 0.625em;
-}
-
-input[type="button"] {
-  background-color: #3a7cdb;
-  color: #eee;
-  border: none;
-  padding: 0.5em 2.25em;
-  border-radius: 0.625em;
-  margin-bottom: 2.25em;
-  -webkit-transition: background-color 0.3s ease-out;
-  -moz-transition: background-color 0.3s ease-out;
-  -o-transition: background-color 0.3s ease-out;
-  transition: background-color 0.3s ease-out;
-}
-input[type="button"]:hover {
   cursor: pointer;
-  text-shadow: 0 1px 3px #444444;
-  background-color: #6599e3;
+}
+
+.mimic_link {
+  padding-bottom: 0.2em;
+  border-bottom: 1px solid;
+  -webkit-transition: color 0.3s ease-out;
+  -moz-transition: color 0.3s ease-out;
+  -o-transition: color 0.3s ease-out;
+  transition: color 0.3s ease-out;
+}
+.mimic_link:hover {
+  cursor: pointer;
+  color: #e13b24;
+}
+
+.app_details {
+  font-size: 0.75em;
+  font-style: italic;
 }
 
 #app {
   text-align: center;
   width: 50%;
   margin: 0 auto 4em;
+}
+#app img {
+  margin-bottom: 1em;
+}
+#app input[type="button"] {
+  margin-bottom: 3em;
+}
+
+.representatives {
+  list-style-type: none;
+}
+
+.representative_profile {
+  margin-bottom: 3em;
+}
+.representative_profile ul {
+  margin-bottom: 1em;
+}
+
+#zipcode-info {
+  display: none;
+  text-align: left;
+  width: 75%;
+  max-width: 35em;
+  margin: 0 auto;
+}
+
+#address_form {
+  display: none;
+  margin-top: 2em;
 }

@@ -34,4 +34,7 @@
 	padding: 1em;
 	background: #b92d19;
 }
-.strike-through {text-decoration: line-through; }
+.strike-through {text-decoration: line-through;
+	&:hover {text-decoration: none;}
+}
+.center {text-align: center;}

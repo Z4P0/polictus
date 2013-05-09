@@ -9,21 +9,7 @@
 
 /* base styles */
 @import "pieces/base";
-
-h1, h2, h3, h4, h5, h6 {
- font-family: "Abraham Lincoln";
-}
-@import "pieces/classes";
-.more-info {
-	color: inherit;
-	text-decoration: none;
-	border-bottom: 1px dotted;
-	@include transition(border-bottom, 0.1s);
-	&:hover {
-		border-color: $background;
-	}
-}
-
+a {color: #b92d19;}
 h1 {
 	font-size: 3.75em;
 	text-transform: uppercase;
@@ -33,6 +19,7 @@ h1 {
 }
 header {
 	text-align: center;
+	padding-bottom: 1em;
 	margin-bottom: 2em;
 	p {font-size: 0.875em; }
 }
@@ -48,11 +35,6 @@ footer {
 		right: 0;
 	}
 }
-.content {
-	margin-bottom: 3em;
-	@include mq(netbook) {margin-top: 6em;}
-	@include transition(margin-top, 0.3s);
-}
 input[type="text"] {
 	text-align: center;
 	padding: 0.5em 2.25em;
@@ -60,24 +42,6 @@ input[type="text"] {
 	max-width: 15em;
 	border-radius: 0.625em;
 }
-// Traditional scale //
-// --
-// 6  = 0.375em
-// 7  = 0.4375em
-// 8  = 0.5em
-// 9  = 0.5625em
-// 10 = 0.625em
-// 11 = 0.6875em
-// 12 = 0.75em
-// 14 = 0.875em
-// 16 = 1em
-// 18 = 1.125em
-// 21 = 1.3125em
-// 24 = 1.5em
-// 36 = 2.25em
-// 48 = 3em
-// 60 = 3.75em
-// 72 = 4.5em
 input[type="button"] {
 	$blue : #3a7cdb;
 	background-color: $blue;
@@ -85,7 +49,6 @@ input[type="button"] {
 	border: none;
 	padding: 0.5em 2.25em;
 	border-radius: 0.625em;
-	margin-bottom: 2.25em;
 	@include transition(background-color, 0.3s);
 	&:hover {
 		cursor: pointer;
@@ -93,8 +56,63 @@ input[type="button"] {
 		background-color: lighten($blue, 10%);
 	}
 }
+@import "pieces/classes";
+.content {
+	padding-bottom: 2em;
+	margin-bottom: 3em;
+	aside {text-align: center; }
+	@include mq(netbook) {margin-top: 6em;}
+	@include transition(margin-top, 0.3s);
+}
+.more-info {
+	color: inherit;
+	text-decoration: none;
+	border-bottom: 1px dotted;
+	@include transition(border-bottom, 0.1s);
+	&:hover {
+		border-color: $background;
+		cursor: pointer;
+	}
+}
+.mimic_link {
+	@extend a;
+	padding-bottom: 0.2em;
+	border-bottom: 1px solid;
+	&:hover {cursor: pointer; color: lighten(#b92d19, 10%);}
+	@include transition(color, 0.3s);
+}
+
+
+
+.app_details {
+	font-size: 0.75em;
+	font-style: italic;
+}
+
 #app {
 	text-align: center;
 	width: 50%;
 	margin: 0 auto 4em;
+	img {margin-bottom: 1em; }
+	input[type="button"] {margin-bottom: 3em; }
 }
+.representatives {list-style-type: none; }
+.representative_profile {
+	margin-bottom: 3em;
+	ul {margin-bottom: 1em; }
+}
+
+#zipcode-info {
+	display: none;
+	text-align: left;
+	width: 75%;
+	max-width: 35em;
+	margin: 0 auto;
+}
+#address_form {
+	display: none;
+	margin-top: 2em;
+}
+
+
+
