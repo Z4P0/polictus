@@ -70,7 +70,7 @@ app.main = (function(){
 			// <div id="address_form"> <input id="address" type="text" placeholder=" ex. 742 Evergreen Terrace, Springfield"><br> <input type="button" value="Search" id="address_btn"> </div>
       var div = element('div');
       		div.id = 'address_form';
-      var p = element('p', 'Please enter a street address');
+      var p = element('p', 'Please enter a street address or city name');
       		div.appendChild(p);
       var address = element('input');
 					address.setAttribute('type','text');
@@ -152,7 +152,7 @@ app.main = (function(){
 		output.appendChild(element('p', 'Looks like something went wrong trying to geolocate within your browser. Try entering a street address to continue'));
 		show('address_form');
 	}
-
+	// enter custom address
 	function codeAddress() {
 	  var address = document.getElementById('address').value;
 	  if (address !== '') {
@@ -258,43 +258,6 @@ app.main = (function(){
 	// process data to make a profile for each representative
 	function rep_profile(_data) {
 		console.log('rep_profile');
-		console.log(_data);
-
-		/* get refernces to all da things */
-		// name
-		var name = _data['title']+'. '+ _data['first_name']+' '+_data['last_name'];
-		var middle_name = _data['middle_name'];
-		var nickname = _data['nickname'];
-		var birthday = _data['birthday'];
-
-		/* bioguide */
-		var bioguide = _data['bioguide_id'];
-		/* =================================== */
-
-		// contact info
-		var office = _data['office'];
-		var phone = _data['phone'];
-		var fax = _data['fax'];
-		var website = _data['website'];
-		var contact = _data['contact_form'];
-
-		// political info
-		var in_office = _data['in_office'];
-		var state = _data['state_name'];
-		var chamber = _data['chamber'];
-		var district = _data['district'];
-		var party = _data['party'];
-		
-		// social media shit
-		var twitter = 'http://twitter.com/'+_data['twitter_id'];
-		var facebook = 'http://facebook.com/'+_data['facebook_id'];
-		var youtube = 'http://youtube.com/'+_data['youtube_id'];
-		// dafuq?
-		var votesmart = _data['votesmart_id'];
-		var thomas = _data['thomas_id'];
-		var fec = _data['fec_ids']; // federal election commitee
-		var govtrack = _data['govtrack_id'];
-		var crp = _data['crp_id']; // influence tracker
 
 		/* make da elements | append da things */
 		/* =================================== */
@@ -335,29 +298,9 @@ app.main = (function(){
 
 		article.appendChild(document.createElement('hr'));
 		
-		// var ul = document.createElement('ul');
-		// 		// ul.className += 'inline';
-		// for (var info in _data) {
-		// 	// console.log(info);
-		// 	// console.log(_data[info]);
-		// 	var li = document.createElement('li');
-		// 	var p = document.createElement('p');
-		// 	var h3 = document.createElement('h3');
-		// 			h3.appendChild(document.createTextNode(info));
-		// 	var span = document.createElement('span');
-		// 			span.appendChild(document.createTextNode(_data[info]));
-		// 	// append
-		// 	p.appendChild(h3);
-		// 	p.appendChild(span);
-		// 	li.appendChild(p);
-		// 	ul.appendChild(li);
-		// }
-		// article.appendChild(ul);
-
 		console.log(article);
 		return article;
 	}
-
 
 	function validate() {
 		// get DOM value
