@@ -1,290 +1,244 @@
+app.main = (function(){
 // Declare other classes with app.someClass = (function(){
 
 // })();
 
 
-app.main = (function(){
-	// API vars
-	// ===================================
-	var SUNLIGHT_API_URL = "http://congress.api.sunlightfoundation.com/";
-	// eric's key
-	// var SUNLIGHT_API_KEY = "6cd4ec29bfbf46819f41b6ae97b575af";
-	// luis' key
-	var SUNLIGHT_API_KEY = '380054b03efa4f4191c92664fc42904d';
-	var OPENSECRET_API_URL = "http://www.opensecrets.org/api/";
-	var OPENSECRET_API_KEY = "c22a9e40689163468d0501d8ee887c8d";
-	///http://congress.api.sunlightfoundation.com/bills?apikey=6cd4ec29bfbf46819f41b6ae97b575af
-	//http://www.opensecrets.org/api/?method=candSummary&cid=N00007360&cycle=2005&apikey=c22a9e40689163468d0501d8ee887c8d&output=json
+	/* =================================== */
+	var _polictus;
+	/* =================================== */
 
 	// DOM reference vars
 	var output;
-	// Data holders
-	var sunLightData;
-	var openSecretData;
-
-
-	// dummy data (14411)
-//	/*
-var DATA = {
-  "results": [
-    {
-      "bioguide_id": "C001092",
-      "birthday": "1950-05-20",
-      "chamber": "house",
-      "contact_form": null,
-      "crp_id": "",
-      "district": 27,
-      "facebook_id": "467047586692268",
-      "fax": null,
-      "fec_ids": [
-          "H8NY29032"
-      ],
-      "first_name": "Chris",
-      "gender": "M",
-      "govtrack_id": "412563",
-      "in_office": true,
-      "last_name": "Collins",
-      "middle_name": null,
-      "name_suffix": null,
-      "nickname": null,
-      "office": "1117 Longworth House Office Building",
-      "party": "R",
-      "phone": "202-225-5265",
-      "state": "NY",
-      "state_name": "New York",
-      "thomas_id": "02151",
-      "title": "Rep",
-      "twitter_id": "RepChrisCollins",
-      "votesmart_id": "",
-      "website": "http://chriscollins.house.gov"
-    },
-    {
-      "bioguide_id": "S000148",
-      "birthday": "1950-11-23",
-      "chamber": "senate",
-      "contact_form": "http://www.schumer.senate.gov/Contact/contact_chuck.cfm",
-      "crp_id": "N00001093",
-      "district": null,
-      "facebook_id": "chuckschumer",
-      "fax": "202-228-3027",
-      "fec_ids": [
-          "S8NY00082"
-      ],
-      "first_name": "Charles",
-      "gender": "M",
-      "govtrack_id": "300087",
-      "in_office": true,
-      "last_name": "Schumer",
-      "lis_id": "S270",
-      "middle_name": "E.",
-      "name_suffix": null,
-      "nickname": null,
-      "office": "322 Hart Senate Office Building",
-      "party": "D",
-      "phone": "202-224-6542",
-      "senate_class": 3,
-      "state": "NY",
-      "state_name": "New York",
-      "state_rank": "senior",
-      "thomas_id": "01036",
-      "title": "Sen",
-      "twitter_id": "chuckschumer",
-      "votesmart_id": 26976,
-      "website": "http://www.schumer.senate.gov",
-      "youtube_id": "SenatorSchumer"
-    },
-    {
-      "bioguide_id": "G000555",
-      "birthday": "1966-12-09",
-      "chamber": "senate",
-      "contact_form": "http://www.gillibrand.senate.gov/contact/",
-      "crp_id": "N00027658",
-      "district": null,
-      "facebook_id": "KirstenGillibrand",
-      "fax": "202-225-1168",
-      "fec_ids": [
-          "H6NY20167"
-      ],
-      "first_name": "Kirsten",
-      "gender": "F",
-      "govtrack_id": "412223",
-      "in_office": true,
-      "last_name": "Gillibrand",
-      "lis_id": "S331",
-      "middle_name": "E.",
-      "name_suffix": null,
-      "nickname": null,
-      "office": "478 Russell Senate Office Building",
-      "party": "D",
-      "phone": "202-224-4451",
-      "senate_class": 1,
-      "state": "NY",
-      "state_name": "New York",
-      "state_rank": "junior",
-      "thomas_id": "01866",
-      "title": "Sen",
-      "twitter_id": null,
-      "votesmart_id": 65147,
-      "website": "http://www.gillibrand.senate.gov",
-      "youtube_id": "KirstenEGillibrand"
-    }
-  ],
-  "count": 3,
-  "page": {
-    "count": 3,
-    "per_page": 20,
-    "page": 1
-  }
-};
+	var _app;
+	// geocoding
+	var geocoder;
+	var latitude; // might not need these
+	var longitude; // might not need these
 
 
 	function init (){
 		console.log("initializing!");
+
+		// set up DOM references
 		output = document.getElementById('results');
+		_app = document.getElementById('app');
+		// geocode setup
+		geocoder = new google.maps.Geocoder();
 
-		var submitButton = $("#submitButton");
-
-		// start app
+		// is there polictus data?
 		// ===================================
-		// press Enter to submit
-		// document.getElementById('zipcode').addEventListener('keypress', function (e) {if (e.keyCode === 13) validate(); }, false)
-		// click on 'submit'
-		submitButton.click(function(){
-			// validate();
-			buildResults(DATA);
-		  navigator.geolocation.getCurrentPosition(success, reportError);
-		});
+		if (localStorage.getItem('polictus') === null) show('start'); // no polictus data. create it
+		else start();// polictus data exists. build gui
 	}
 
 
 
-	// geocoding
+	// app 'screens'
+	// ===================================
+	function show(_screen) {
+		console.log('hello from: show');
+		// this builds DOM elements & adds event listeners for the app interface
+
+		// frag to hold our DOM elements
+		var frag = document.createDocumentFragment();
+
+		// initial setup
+		// ----------------------------
+		if (_screen === 'start') {
+			// <p>Find your elected representatives</p>
+			frag.appendChild(element('p','Find your elected representatives'));
+      // <input type="button" value="Start" id="submitButton">
+			var input = document.createElement('input');
+					input.setAttribute('type','button');
+					input.setAttribute('value','Start');
+					input.setAttribute('id','submitButton');
+					input.addEventListener('click', function() {navigator.geolocation.getCurrentPosition(success, geocodeError);}, false );
+			frag.appendChild(input);
+			// <br>
+			frag.appendChild(document.createElement('br'));
+			// <p class="app_details">We search by using your geolocation.<br><span class="mimic_link">Search for a different location</span></p>
+			var p1 = element('p','We search by using your geolocation.');
+					p1.className += 'app_details';
+			var span1 = element('span','Search for a different location');
+					span1.className += 'mimic_link';
+					span1.addEventListener('click', function() {$("#address_form").slideToggle();}, false );
+					p1.appendChild(document.createElement('br'));
+					p1.appendChild(span1);
+			frag.appendChild(p1);
+			// hidden 'form'
+			// <div id="address_form"> <input id="address" type="text" placeholder=" ex. 742 Evergreen Terrace, Springfield"><br> <input type="button" value="Search" id="address_btn"> </div>
+      var div = element('div');
+      		div.id = 'address_form';
+      var p = element('p', 'Please enter a street address');
+      		div.appendChild(p);
+      var address = element('input');
+					address.setAttribute('type','text');
+					address.setAttribute('placeholder',' ex. 742 Evergreen Terrace, Springfield');
+					address.setAttribute('id','address');
+					address.addEventListener('keypress', function (e) {if (e.keyCode === 13) {codeAddress(); } }, false);					
+					div.appendChild(address);
+					div.appendChild(document.createElement('br'));
+			var button = element('input');
+					button.setAttribute('type','button');
+					button.setAttribute('value','Search');
+					button.setAttribute('id','address_btn');
+					button.addEventListener('click', function() {codeAddress();}, false );
+					div.appendChild(button);
+      frag.appendChild(div);
+			// <p class="app_details"><span class="more-info">Why not <span class="strike-through">zoidberg</span> zipcodes?</span></p>			
+			var p2 = element('p');
+					p2.className += 'app_details';
+			var span2 = element('span');
+					span2.className += 'more-info';
+					// innerHTML.. :/
+					span2.innerHTML = 'Why not <span class="strike-through">zoidberg</span> zipcodes?</span>';
+					span2.addEventListener('click', function() {$("#zipcode-info").slideToggle();}, false );
+					p2.appendChild(span2);
+			frag.appendChild(p2);
+		}
+		// show just the address form
+		// ----------------------------
+		else if (_screen === 'address_form') {
+			// <div id="address_form"> <input id="address" type="text" placeholder=" ex. 742 Evergreen Terrace, Springfield"><br> <input type="button" value="Search" id="address_btn"> </div>
+      var div = element('div');
+      		div.id = 'address_form';
+      var p = element('p', 'Please enter a street address');
+      		div.appendChild(p);
+      var address = element('input');
+					address.setAttribute('type','text');
+					address.setAttribute('placeholder',' ex. 742 Evergreen Terrace, Springfield');
+					address.setAttribute('id','address');
+					address.addEventListener('keypress', function (e) {if (e.keyCode === 13) {codeAddress(); } }, false);
+					div.appendChild(address);
+					div.appendChild(document.createElement('br'));
+			var button = element('input');
+					button.setAttribute('type','button');
+					button.setAttribute('value','Search');
+					button.setAttribute('id','address_btn');
+					button.addEventListener('click', function() {codeAddress();}, false );
+					div.appendChild(button);
+      frag.appendChild(div);			
+		}
+		// herp derp
+		// ----------------------------
+		else {console.log('lol something went wrong in show()'); }
+
+		// append to DOM
+		// ----------------------------
+		clear(_app);
+		_app.appendChild(frag);
+	}
+
+	function start() {
+		console.log('hello from: start');
+		// build gui
+		
+		/* dev mode */
+		localStorage.removeItem('polictus');
+		show('start');
+	}
+
+	/* geocoding */
+	// save the coords to the global vars
 	// ===================================
 	function success(position) {
-	  var s = output;
-	  
-	  if (s.className == 'success') {
-	    // not sure why we're hitting this twice in FF, I think it's to do with a cached result coming back    
-	    return;
-	  }
-	  
-	  s.innerHTML = "found you!";
-	  s.className = 'success';
-	  
-	  var mapcanvas = document.createElement('div');
-	  mapcanvas.id = 'mapcanvas';
-	  mapcanvas.style.height = '400px';
-	  mapcanvas.style.width = '560px';
-	    
-	  document.querySelector('article').appendChild(mapcanvas);
-	  
-	  var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-	  var myOptions = {
-	    zoom: 15,
-	    center: latlng,
-	    mapTypeControl: false,
-	    navigationControlOptions: {style: google.maps.NavigationControlStyle.SMALL},
-	    mapTypeId: google.maps.MapTypeId.ROADMAP
-	  };
-	  var map = new google.maps.Map(document.getElementById("mapcanvas"), myOptions);
-	  
-	  var marker = new google.maps.Marker({
-	      position: latlng, 
-	      map: map, 
-	      title:"You are here! (at least within a "+position.coords.accuracy+" meter radius)"
-	  });
+	  // call APIs -> build polictus obj
+		_polictus = new app.polictus.Polictus(position.coords.latitude,position.coords.longitude);
+	}
+	// in case geo-coding fux up
+	function geocodeError() {
+		clear(output);
+		output.appendChild(element('p', 'Looks like something went wrong trying to geolocate within your browser. Try entering a street address to continue'));
+		show('address_form');
 	}
 
-function error(msg) {
-  var s = output;
-  s.innerHTML = typeof msg == 'string' ? msg : "failed";
-  s.className = 'fail';
-}
-
-
-
-
-
-
-
-
-
-	// ===================================
-
-	function callAPIs(){
-		var zipQuery = $("#zipcode").val();
-
-		$.ajax({
-		  url: SUNLIGHT_API_URL + 'legislators/' + 'locate?zip='+ zipQuery +'&apikey=' + SUNLIGHT_API_KEY ,
-		  context: document.body
-		}).done(function(data) {
-			console.log(data);
-
-			buildResults(data);
-			// buildSunlight(data);
-		});
-
-		// USING PROXY
-		// ----------------------------
-		// var PROXY_URL = "feed_proxy.php?filename=";
-
-		// // var ATOM_URL = "http://earthquake.usgs.gov/earthquakes/feed/v0.1/summary/2.5_month.atom";
-		// var ATOM_URL = "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topsongs/limit=10/xml";
-
-		// $.ajax(
-		// {
-		// 		type: "GET",
-		// 		url: PROXY_URL + ATOM_URL,
-		// 		dataType: "xml",
-		// 		success:function(xml){onLoaded(xml);}
-		// });
-
+	function codeAddress() {
+	  var address = document.getElementById('address').value;
+	  if (address !== '') {
+		  geocoder.geocode( { 'address': address}, function(results, status) {
+		    if (status == google.maps.GeocoderStatus.OK) {
+				  // call APIs -> build polictus obj
+					_polictus = new app.polictus.Polictus(results[0].geometry.location.kb,results[0].geometry.location.lb);
+		    }
+		    else {alert('Geocode was not successful for the following reason: ' + status); }
+		  });
+		}
+		else { reportError('Please enter an address to continue');}
+	// source:
+	// https://developers.google.com/maps/documentation/javascript/examples/geocoding-simple
 	}
+
+
+
+
 
 
 	function buildResults(sunLightData){
 		console.log('hello from: buildResults');
-		console.log(sunLightData);
+		
+		// print(sunLightData);
+		// console.log(sunLightData);
+		// for (var uhh in sunLightData) {
+		// 	console.log(sunLightData[uhh]);
+		// }
 
-		var SLData = sunLightData;
-		var SLResults = SLData.results;
+		var data = sunLightData.results;
+		// console.log(data);
 
-		var target = $("#results");
+		var ul = document.createElement('ul');
+				ul.className += 'representatives';
+
+		for (var representative in data) {
+			// console.log(data[representative]);
+			var li = document.createElement('li');
+					li.appendChild(rep_profile(data[representative]));
+
+			ul.appendChild(li);
+		}
+
+		// append finished thing to DOM
+		clear(output);
+		print(ul);
+
+		// var SLData = sunLightData;
+		// var SLResults = SLData.results;
+
+		// var target = output;
 
 		// var OSData;
 		// var legislators = [];
-		target.html("");
+		// clear(target);
 
-		for (var i = 0; i < SLResults.length; i++) {
-			var fName = SLResults[i].first_name;
-			var lName = SLResults[i].last_name;
-			var title = SLResults[i].title;
-			var crp_id = SLResults[i].crp_id;
-			var facebook_id = SLResults[i].facebook_id;
-			var twitter = SLResults[i].twitter_id;
-			var youtube = SLResults[i].youtube_id;
-			var officeAddress = SLResults[i].office;
-			var party = SLResults[i].party;
-			var phone = SLResults[i].phone;
-			var state = SLResults[i].state_name;
-			var website = SLResults[i].website;
+		// for (var i = 0; i < SLResults.length; i++) {
+		// 	var fName = SLResults[i].first_name;
+		// 	var lName = SLResults[i].last_name;
+		// 	var title = SLResults[i].title;
+		// 	var crp_id = SLResults[i].crp_id;
+		// 	var facebook_id = SLResults[i].facebook_id;
+		// 	var twitter = SLResults[i].twitter_id;
+		// 	var youtube = SLResults[i].youtube_id;
+		// 	var officeAddress = SLResults[i].office;
+		// 	var party = SLResults[i].party;
+		// 	var phone = SLResults[i].phone;
+		// 	var state = SLResults[i].state_name;
+		// 	var website = SLResults[i].website;
 
-			var resultsHTML ="";
+		// 	var resultsHTML ="";
 
-			resultsHTML += "<article>";
-			resultsHTML += "<h2>" + title + " " + fName + " " + lName +"</h2>";
-			resultsHTML += "<p>";
-			resultsHTML += "Office Address: " + officeAddress + ", " + state + "<br>";
-			resultsHTML += "Phone: " + phone + "<br>";
-			resultsHTML += "Party: " + party + "<br>";
+		// 	resultsHTML += "<article>";
+		// 	resultsHTML += "<h2>" + title + " " + fName + " " + lName +"</h2>";
+		// 	resultsHTML += "<p>";
+		// 	resultsHTML += "Office Address: " + officeAddress + ", " + state + "<br>";
+		// 	resultsHTML += "Phone: " + phone + "<br>";
+		// 	resultsHTML += "Party: " + party + "<br>";
 
-			resultsHTML += "<a href='" + website + "'>Website</a>";
-			resultsHTML += "</p>";
-			resultsHTML += "</article>";
+		// 	resultsHTML += "<a href='" + website + "'>Website</a>";
+		// 	resultsHTML += "</p>";
+		// 	resultsHTML += "</article>";
 
 			// clear(target);
 
-			target.append(resultsHTML);
 
 
 			// $.ajax({
@@ -296,8 +250,114 @@ function error(msg) {
 			// var legislator = fName + " " + lName;
 			// legislators.push(legislator);
 
-		};
+		// }
+
+		// target.innerHTML = resultsHTML;
 	}
+
+	// process data to make a profile for each representative
+	function rep_profile(_data) {
+		console.log('rep_profile');
+		console.log(_data);
+
+		/* get refernces to all da things */
+		// name
+		var name = _data['title']+'. '+ _data['first_name']+' '+_data['last_name'];
+		var middle_name = _data['middle_name'];
+		var nickname = _data['nickname'];
+		var birthday = _data['birthday'];
+
+		/* bioguide */
+		var bioguide = _data['bioguide_id'];
+		/* =================================== */
+
+		// contact info
+		var office = _data['office'];
+		var phone = _data['phone'];
+		var fax = _data['fax'];
+		var website = _data['website'];
+		var contact = _data['contact_form'];
+
+		// political info
+		var in_office = _data['in_office'];
+		var state = _data['state_name'];
+		var chamber = _data['chamber'];
+		var district = _data['district'];
+		var party = _data['party'];
+		
+		// social media shit
+		var twitter = 'http://twitter.com/'+_data['twitter_id'];
+		var facebook = 'http://facebook.com/'+_data['facebook_id'];
+		var youtube = 'http://youtube.com/'+_data['youtube_id'];
+		// dafuq?
+		var votesmart = _data['votesmart_id'];
+		var thomas = _data['thomas_id'];
+		var fec = _data['fec_ids']; // federal election commitee
+		var govtrack = _data['govtrack_id'];
+		var crp = _data['crp_id']; // influence tracker
+
+		/* make da elements | append da things */
+		/* =================================== */
+		// the big container
+		var article = document.createElement('article');
+				article.id += bioguide;
+				article.className += 'representative_profile';
+		// name
+		article.appendChild(element('h2', name));
+		article.appendChild(element('img','https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/SenatorGillibrandpic.jpg/220px-SenatorGillibrandpic.jpg'));
+		// political info
+		var political_info = element('ul');
+				political_info.className += 'political_info';
+				political_info.appendChild(element('li','Is currently in office: '+in_office));
+				political_info.appendChild(element('li',state));
+				political_info.appendChild(element('li',chamber));
+				political_info.appendChild(element('li',district));
+				political_info.appendChild(element('li',party));
+		article.appendChild(political_info);
+		// contact info
+		var contact_info = element('ul');
+				contact_info.className += 'contact_info';
+				contact_info.appendChild(element('li',office));
+				contact_info.appendChild(element('li',phone));
+				contact_info.appendChild(element('li',fax));
+				contact_info.appendChild(element('li',website));
+				contact_info.appendChild(element('li',contact));
+		article.appendChild(contact_info);
+		// social media
+		var social_media = element('ul');
+				social_media.className += 'social_media';
+				social_media.appendChild(element('li',twitter));
+				social_media.appendChild(element('li',facebook));
+				social_media.appendChild(element('li',youtube));
+		article.appendChild(social_media);
+
+
+
+		article.appendChild(document.createElement('hr'));
+		
+		// var ul = document.createElement('ul');
+		// 		// ul.className += 'inline';
+		// for (var info in _data) {
+		// 	// console.log(info);
+		// 	// console.log(_data[info]);
+		// 	var li = document.createElement('li');
+		// 	var p = document.createElement('p');
+		// 	var h3 = document.createElement('h3');
+		// 			h3.appendChild(document.createTextNode(info));
+		// 	var span = document.createElement('span');
+		// 			span.appendChild(document.createTextNode(_data[info]));
+		// 	// append
+		// 	p.appendChild(h3);
+		// 	p.appendChild(span);
+		// 	li.appendChild(p);
+		// 	ul.appendChild(li);
+		// }
+		// article.appendChild(ul);
+
+		console.log(article);
+		return article;
+	}
+
 
 	function validate() {
 		// get DOM value
@@ -379,11 +439,20 @@ function error(msg) {
 		}
 		return ele;
 	}
+	// print out stuff to the DOM
+	function print(_thing) {
+		// if output is not set it appends to the body
+		// position: fixed; left: 0; right: 0; bottom: 0; font-size: 0.75em; padding: 1em; color: tomato;
+		// console.log('print');
+		// console.log(_thing);
+
+		// var p = document.createElement('p');
+		// p.appendChild(document.createTextNode(_thing));
+		output.appendChild(_thing);
+	}
 
 	//Public interface
 	return{
 		init : init
-		//someVar : someVar,
-		//someFunc : someFunc
 	}
 })();
