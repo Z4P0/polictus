@@ -38,3 +38,20 @@
 	&:hover {text-decoration: none;}
 }
 .center {text-align: center;}
+.more-info {
+	color: inherit;
+	text-decoration: none;
+	border-bottom: 1px dotted;
+	@include transition(border-bottom, 0.1s);
+	&:hover {
+		border-color: $background;
+		cursor: pointer;
+	}
+}
+.mimic_link {
+	@extend a;
+	padding-bottom: 0.2em;
+	border-bottom: 1px solid;
+	&:hover {cursor: pointer; color: lighten(#b92d19, 10%);}
+	@include transition(color, 0.3s);
+}

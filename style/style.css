@@ -97,6 +97,10 @@ body {
   line-height: 1.4;
   color: white;
   background: #222222;
+  -webkit-transition: background 1s ease-out;
+  -moz-transition: background 1s ease-out;
+  -o-transition: background 1s ease-out;
+  transition: background 1s ease-out;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -124,16 +128,26 @@ h1 {
   text-transform: uppercase;
   font-weight: normal;
   line-height: 1.1;
-  margin-bottom: 0;
+  margin: 0;
+  -webkit-transition: font-size 0.3s ease-out;
+  -moz-transition: font-size 0.3s ease-out;
+  -o-transition: font-size 0.3s ease-out;
+  transition: font-size 0.3s ease-out;
 }
 
 header {
   text-align: center;
-  padding-bottom: 1em;
+  padding: 1em 0;
+  background-color: #222222;
   margin-bottom: 2em;
+  -webkit-transition: text-align 0.3s ease-out;
+  -moz-transition: text-align 0.3s ease-out;
+  -o-transition: text-align 0.3s ease-out;
+  transition: text-align 0.3s ease-out;
 }
 header p {
   font-size: 0.875em;
+  margin-bottom: 0;
 }
 
 footer {
@@ -183,13 +197,14 @@ input[type="button"]:hover {
   margin: 0 auto;
 }
 
-.cf:before,
-.cf:after {
+.cf:before, .representative_profile article:before,
+.cf:after,
+.representative_profile article:after {
   content: " ";
   display: table;
 }
 
-.cf:after {
+.cf:after, .representative_profile article:after {
   clear: both;
 }
 
@@ -233,23 +248,6 @@ input[type="button"]:hover {
   text-align: center;
 }
 
-.content {
-  padding-bottom: 2em;
-  margin-bottom: 3em;
-  -webkit-transition: margin-top 0.3s ease-out;
-  -moz-transition: margin-top 0.3s ease-out;
-  -o-transition: margin-top 0.3s ease-out;
-  transition: margin-top 0.3s ease-out;
-}
-.content aside {
-  text-align: center;
-}
-@media only screen and (min-width: 768px) {
-  .content {
-    margin-top: 6em;
-  }
-}
-
 .more-info {
   color: inherit;
   text-decoration: none;
@@ -277,9 +275,21 @@ input[type="button"]:hover {
   color: #e13b24;
 }
 
-.app_details {
-  font-size: 0.75em;
-  font-style: italic;
+.content {
+  padding-bottom: 2em;
+  margin-bottom: 3em;
+  -webkit-transition: margin-top 0.3s ease-out;
+  -moz-transition: margin-top 0.3s ease-out;
+  -o-transition: margin-top 0.3s ease-out;
+  transition: margin-top 0.3s ease-out;
+}
+.content aside {
+  text-align: center;
+}
+@media only screen and (min-width: 768px) {
+  .content {
+    margin-top: 6em;
+  }
 }
 
 #app {
@@ -294,15 +304,14 @@ input[type="button"]:hover {
   margin-bottom: 3em;
 }
 
-.representatives {
-  list-style-type: none;
+.app_details {
+  font-size: 0.75em;
+  font-style: italic;
 }
 
-.representative_profile {
-  margin-bottom: 3em;
-}
-.representative_profile ul {
-  margin-bottom: 1em;
+#address_form {
+  display: none;
+  margin-top: 2em;
 }
 
 #zipcode-info {
@@ -313,7 +322,78 @@ input[type="button"]:hover {
   margin: 0 auto;
 }
 
-#address_form {
-  display: none;
-  margin-top: 2em;
+/* dashboard */
+#dashboard {
+  background-color: #ebebeb;
+}
+#dashboard h1 {
+  font-size: 2.25em;
+}
+#dashboard .content {
+  color: #222222;
+}
+
+.full_name {
+  padding-left: 0.5em;
+  font-size: 0.625em;
+  color: #888;
+  -webkit-transition: color 0.3s ease-out;
+  -moz-transition: color 0.3s ease-out;
+  -o-transition: color 0.3s ease-out;
+  transition: color 0.3s ease-out;
+}
+.full_name:before {
+  content: "( ";
+}
+.full_name:after {
+  content: " )";
+}
+.full_name:hover {
+  color: #3c3c3c;
+}
+
+.representatives {
+  list-style-type: none;
+}
+
+.representative_profile {
+  border-bottom: 1px solid;
+  margin-bottom: 3em;
+}
+.representative_profile h2 {
+  font-size: 2.25em;
+  line-height: 1;
+  margin: 0;
+}
+.representative_profile img {
+  max-width: 220px;
+  max-height: 284px;
+  margin: 0 2em 2em 0;
+}
+.representative_profile p {
+  max-width: 45em;
+}
+.representative_profile article {
+  display: inline-block;
+  border-bottom: 1px solid;
+  margin-bottom: 2em;
+}
+@media only screen and (min-width: 480px) {
+  .representative_profile article img {
+    float: left;
+  }
+}
+.representative_profile dl {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 4em 2em 0;
+}
+.representative_profile dt {
+  font-family: "Helvetica Neue", Arial, Verdana, sans-serif;
+  font-size: 0.6875em;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.representative_profile dd {
+  margin: 0 0 0.875em;
 }

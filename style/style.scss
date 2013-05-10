@@ -15,13 +15,16 @@ h1 {
 	text-transform: uppercase;
 	font-weight: normal;
 	line-height: 1.1;
-	margin-bottom: 0;
+	margin: 0;
+	@include transition(font-size, 0.3s);
 }
 header {
 	text-align: center;
-	padding-bottom: 1em;
+	padding: 1em 0;
+	background-color: $background;
 	margin-bottom: 2em;
-	p {font-size: 0.875em; }
+	p {font-size: 0.875em; margin-bottom: 0; }
+	@include transition(text-align, 0.3s);
 }
 footer {
 	font-size: 0.6875em;
@@ -64,30 +67,10 @@ input[type="button"] {
 	@include mq(netbook) {margin-top: 6em;}
 	@include transition(margin-top, 0.3s);
 }
-.more-info {
-	color: inherit;
-	text-decoration: none;
-	border-bottom: 1px dotted;
-	@include transition(border-bottom, 0.1s);
-	&:hover {
-		border-color: $background;
-		cursor: pointer;
-	}
-}
-.mimic_link {
-	@extend a;
-	padding-bottom: 0.2em;
-	border-bottom: 1px solid;
-	&:hover {cursor: pointer; color: lighten(#b92d19, 10%);}
-	@include transition(color, 0.3s);
-}
 
 
 
-.app_details {
-	font-size: 0.75em;
-	font-style: italic;
-}
+
 
 #app {
 	text-align: center;
@@ -96,22 +79,96 @@ input[type="button"] {
 	img {margin-bottom: 1em; }
 	input[type="button"] {margin-bottom: 3em; }
 }
-.representatives {list-style-type: none; }
-.representative_profile {
-	margin-bottom: 3em;
-	ul {margin-bottom: 1em; }
+.app_details {
+	font-size: 0.75em;
+	font-style: italic;
+}
+#address_form {
+	display: none;
+	margin-top: 2em;
 }
 
-#zipcode-info {
+
+
+#zipcode-info { // "Don't Use Zipcodes"
 	display: none;
 	text-align: left;
 	width: 75%;
 	max-width: 35em;
 	margin: 0 auto;
 }
-#address_form {
-	display: none;
-	margin-top: 2em;
+// Traditional scale //
+// --
+// 6  = 0.375em
+// 7  = 0.4375em
+// 8  = 0.5em
+// 9  = 0.5625em
+// 10 = 0.625em
+// 11 = 0.6875em
+// 12 = 0.75em
+// 14 = 0.875em
+// 16 = 1em
+// 18 = 1.125em
+// 21 = 1.3125em
+// 24 = 1.5em
+// 36 = 2.25em
+// 48 = 3em
+// 60 = 3.75em
+// 72 = 4.5em
+
+
+/* dashboard */
+#dashboard {
+	background-color: #ebebeb;
+	h1 {font-size: 2.25em; }
+	.content {color: $background; }
+}
+.full_name {
+	padding-left: 0.5em;
+	font-size: 0.625em;
+	color: #888;
+	&:before {content: "( ";}
+	&:after {content: " )";}
+	&:hover {color: lighten($background, 10%); }
+	@include transition(color, 0.3s);
+}
+
+
+
+.representatives {list-style-type: none; }
+.representative_profile {
+	border-bottom: 1px solid;
+	margin-bottom: 3em;
+	h2 {
+		font-size: 2.25em;
+		line-height: 1;
+		margin: 0;
+	}
+	img {
+		max-width: 220px;
+		max-height: 284px;
+		margin: 0 2em 2em 0;
+	}
+	p {max-width: 45em;}
+	article {
+		display: inline-block;
+		border-bottom: 1px solid;
+		margin-bottom: 2em;
+		@extend .cf;
+		img {@include mq(tablet) {float: left; }}
+	}
+	dl {
+		display: inline-block;
+		vertical-align: top;
+		margin: 0 4em 2em 0;
+	}
+	dt {
+		font-family: "Helvetica Neue", Arial, Verdana, sans-serif;
+		font-size: 0.6875em;
+		text-transform: uppercase;
+		font-weight: bold;
+	}
+	dd {margin:0 0 0.875em; }
 }
 
 

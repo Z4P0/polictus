@@ -27,7 +27,7 @@ app.main = (function(){
 		// is there polictus data?
 		// ===================================
 		if (localStorage.getItem('polictus') === null) show('start'); // no polictus data. create it
-		else start();// polictus data exists. build gui
+		else dash();// polictus data exists. build gui
 	}
 
 
@@ -128,14 +128,23 @@ app.main = (function(){
 		_app.appendChild(frag);
 	}
 
-	function start() {
-		console.log('hello from: start');
-		// build gui
-		
-		/* dev mode */
-		localStorage.removeItem('polictus');
-		show('start');
+	// the dashboard
+	function dash() {
+		console.log('hello from: dash');
+		// this builds HTML from reading 
+
+		document.getElementsByTagName('body')[0].id='dashboard';
+		// get the polictus obj
+		var pol = localStorage.getItem('polictus');
+		pol = JSON.parse(pol);
+		console.log(pol);
+
+		for (var representative in pol['representatives']) {
+			console.log(pol['representatives'][representative]);
+		}
 	}
+
+
 
 	/* geocoding */
 	// save the coords to the global vars

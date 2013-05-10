@@ -59,6 +59,7 @@ app.polictus = (function () {
 
 		/* ----------- process ------------ */
 		/* sunlight > wikipedia > gov track & influence explorer */
+		/* when done..  */
 	}
  	/* ============== end constructor =============== */
 
