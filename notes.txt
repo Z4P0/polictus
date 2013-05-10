@@ -46,7 +46,6 @@ i expected to be able to make calls for specific content from pages
 maybe something like
 title=Kirsten_Gillibrand|Chuck_Schumer/summary|main_image
 
-most of the time i hate other people's mark-up. idk why i think mine is any better but when requesting info i want it in it's rawest, purest form. just straight text (that i can access via something reasonable and easily parasble) so that i can add markup how i want it
 
 
 
