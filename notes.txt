@@ -28,11 +28,6 @@ polictus = {
 
 
 
-
---
-deal with nicknames (might be tough)
-
-
 ==
 credits:
 SUNLIGHT FOUNDATION!! OMG SRSLY <3
@@ -69,8 +64,8 @@ start:
 				√ wikipedia
 
 			show:
-				basic info on their reps. [sunlight]
-				short bio/picture 				[wikipedia]
+				√ basic info on their reps. [sunlight]
+				√ short bio/picture 				[wikipedia]
 				voting history 						[govtrack]
 				influences 								[influenceexplorer]
 

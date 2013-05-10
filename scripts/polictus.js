@@ -24,65 +24,14 @@ app.polictus = (function () {
 	//http://www.opensecrets.org/api/?method=candSummary&cid=N00007360&cycle=2005&apikey=c22a9e40689163468d0501d8ee887c8d&output=json
 
 
-
-
-
 	// Data holders
 	var sunLightData;
 	var openSecretData;
 
 
 
-
-
-
-
-
-	/*
-	polictus = {
-		citizen : {
-			name : "patriot",
-			district : "25", // if this isn't known we show the start up screen
-			email : "email@address.com",
-			interests : [
-				// used to notify users of bills that might affect them
-				// + highlight bills/vote that they care about
-			]
-		},
-		representatives : [
-			// this would get populated on startup
-			{
-				name: "some thing",
-				[all sunlight info],
-				bio : "[wikipedia text]",
-				picture : "[url from wikipedia]"
-				[all other API info we get]
-			},
-			{
-				name: "other senator",
-				[all other info]
-			}
-		]
-	}
-	 */
-
-
-
-
-
-
-
-
-
-
-	/**
-	 * we must have a location in order to find the correct representative
-	 * it is how we initialize everything.
-	 * we need to know the proper representatives
-	 */
 	function Polictus (_latitude,_longitude) {
 	 	console.log('hello from: Polictus');
-	 	// console.log(_latitude +' | '+_longitude);
 
 	 	// make our polictus obj
 	 	var polictus = {
@@ -107,6 +56,9 @@ app.polictus = (function () {
 				parseJSON('sunlight', data);
 			}
 		);
+
+		/* ----------- process ------------ */
+		/* sunlight > wikipedia > gov track & influence explorer */
 	}
  	/* ============== end constructor =============== */
 
@@ -128,48 +80,16 @@ app.polictus = (function () {
 				// make a new object > push it to the Politicus object
 				var rep = {};
 
-				// name
-				rep.name = data[representative]['first_name']+' '+data[representative]['last_name'];
-				rep.title = data[representative]['title'];
-				rep.middle_name = data[representative]['middle_name'];
-				rep.nickname = data[representative]['nickname'];
-				rep.birthday = data[representative]['birthday'];
+				// copy the info over from sunlight
+				for (var info in data[representative]) {
+					rep[info] = data[representative][info];
+				}
 
-				/* bioguide */
-				rep.bioguide = data[representative]['bioguide_id'];
-				/* =================================== */
-
-				// contact info
-				rep.office = data[representative]['office'];
-				rep.phone = data[representative]['phone'];
-				rep.fax = data[representative]['fax'];
-				rep.website = data[representative]['website'];
-				rep.contact = data[representative]['contact_form'];
-
-				// political info
-				rep.in_office = data[representative]['in_office'];
-				rep.state = data[representative]['state_name'];
-				rep.chamber = data[representative]['chamber'];
-				rep.district = data[representative]['district'];
-				rep.party = data[representative]['party'];
-				
-				// social media shit
-				rep.twitter = 'http://twitter.com/'+data[representative]['twitter_id'];
-				rep.facebook = 'http://facebook.com/'+data[representative]['facebook_id'];
-				rep.youtube = 'http://youtube.com/'+data[representative]['youtube_id'];
-				// dafuq?
-				rep.votesmart = data[representative]['votesmart_id'];
-				rep.thomas = data[representative]['thomas_id'];
-				rep.fec = data[representative]['fec_ids']; // federal election commitee
-				rep.govtrack = data[representative]['govtrack_id'];
-				rep.crp = data[representative]['crp_id']; // influence tracker
-
-
-				// prep to make wikipedia call
+				// wikipedia info
 				var wikiurl = 'https://en.wikipedia.org/wiki/'+data[representative]['first_name']+'_'+data[representative]['last_name'];
 				rep.wikipedia = wikiurl;
 
-				// push
+				// push representative info to the polictus obj
 				pol.representatives.push(rep);
 
 				$.ajax({
@@ -179,36 +99,42 @@ app.polictus = (function () {
 							parseWiki(res.responseText);
 					}
 				});
-
 			}
 
-			// save
+			// save polictus obj
 			localStorage.setItem('polictus', JSON.stringify(pol));
  		} // end if..loop
  	}
 
-
-
-
-
 	function parseWiki(_rawHTML) {
 		// this func parses it for:
-		// - summary bio √
-		// - image url √
-
-		// get our saved Politicus object
-		var pol = JSON.parse(localStorage.getItem('polictus'));
-		var reps = pol.representatives;
-		// console.log(reps);
-		// for (var representative in reps) {
-			// console.log(reps[representative]);
-		// }
-
+		// - summary bio
+		// - image url
 		var start = _rawHTML.split(/(<table class="infobox vcard")/)[2];
 		var image_url = 'https:'+start.split(/(src=")/)[2].split(/(")\s/)[0];
 		var bio_summary = start.split(/(<\/table>)/)[2].split(/(<table )/)[0];
 
-		console.log(pol);
+		// get our saved Politicus object
+		var pol = JSON.parse(localStorage.getItem('polictus'));
+		var reps = pol.representatives;
+
+		// which representative is the wiki data for?
+		for (var representative in reps) {
+			// setup regex test
+			var name = new RegExp(reps[representative]['last_name']);
+
+			// if the the last name can be found in the bio_summary we have the right match
+			if (name.test(bio_summary)) {
+				console.log('wiki for: '+reps[representative]['last_name']);
+				console.log(bio_summary);
+				// add the info to the polictus obj
+				reps[representative]['profile_picture'] = image_url;
+				reps[representative]['bio'] = bio_summary;
+			}
+		}
+
+		// save polictus obj
+		localStorage.setItem('polictus', JSON.stringify(pol));		
 	}
 
 

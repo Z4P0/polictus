@@ -13,8 +13,6 @@ app.main = (function(){
 	var _app;
 	// geocoding
 	var geocoder;
-	var latitude; // might not need these
-	var longitude; // might not need these
 
 
 	function init (){
