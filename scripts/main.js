@@ -172,9 +172,9 @@ app.main = (function(){
 	}
 	// in case geo-coding fux up
 	function geocodeError() {
+		show('address_form');
 		clear(output);
 		output.appendChild(element('p', 'Looks like something went wrong trying to geolocate within your browser. Try entering a street address to continue'));
-		show('address_form');
 	}
 	// enter custom address
 	function codeAddress() {
