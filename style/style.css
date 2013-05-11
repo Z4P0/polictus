@@ -370,18 +370,19 @@ input[type="button"]:hover {
   max-height: 284px;
   margin: 0 2em 2em 0;
 }
-.representative_profile p {
-  max-width: 45em;
-}
 .representative_profile article {
   display: inline-block;
   border-bottom: 1px solid;
   margin-bottom: 2em;
+  max-width: 45em;
 }
 @media only screen and (min-width: 480px) {
   .representative_profile article img {
     float: left;
   }
+}
+.representative_profile article p:only-child {
+  min-height: 284px;
 }
 .representative_profile dl {
   display: inline-block;

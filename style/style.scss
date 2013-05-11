@@ -149,13 +149,14 @@ input[type="button"] {
 		max-height: 284px;
 		margin: 0 2em 2em 0;
 	}
-	p {max-width: 45em;}
 	article {
 		display: inline-block;
 		border-bottom: 1px solid;
 		margin-bottom: 2em;
+		max-width: 45em;
 		@extend .cf;
 		img {@include mq(tablet) {float: left; }}
+		p:only-child {min-height: 284px;}
 	}
 	dl {
 		display: inline-block;

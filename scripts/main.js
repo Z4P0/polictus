@@ -118,6 +118,10 @@ app.main = (function(){
 					div.appendChild(button);
       frag.appendChild(div);			
 		}
+		// show dash menu
+		else if (_screen === 'dashboard') {
+			console.log('make dashboard');
+		}
 		// herp derp
 		// ----------------------------
 		else {console.log('lol something went wrong in show()'); }
@@ -129,19 +133,32 @@ app.main = (function(){
 	}
 
 	// the dashboard
+	// this builds HTML from reading 
 	function dash() {
 		console.log('hello from: dash');
-		// this builds HTML from reading 
 
+		// set <body> id="dashboard"
 		document.getElementsByTagName('body')[0].id='dashboard';
+
 		// get the polictus obj
 		var pol = localStorage.getItem('polictus');
 		pol = JSON.parse(pol);
 		console.log(pol);
 
+		// create list of representatives
+		// var representatives = element('ul');
+		// for each representative..
+		clear(output);
 		for (var representative in pol['representatives']) {
-			console.log(pol['representatives'][representative]);
+			// build their profile, with their data
+			// var rep = element('li');
+			output.appendChild(build('representative_profile', pol['representatives'][representative]));
+			// representatives.appendChild(rep);
 		}
+		// output.appendChild(representatives);
+
+		// show dashboard menu
+		show('dashboard');
 	}
 
 
@@ -181,32 +198,122 @@ app.main = (function(){
 
 
 
-	function buildResults(sunLightData){
-		console.log('hello from: buildResults');
+	function build(_something, _data){
+		console.log('hello from: build');
+		// always returns a DOM obj
+
+		if (_something === 'representative_profile') {
+			console.log('make for:');
+			console.log(_data);
+
+			// <section class="representative_profile" id="bioguide_id">
+			var profile = element('section');
+					profile.className += 'representative_profile';
+					profile.id += _data.bioguide_id;
+			// <h2>Sen. Kirsten Gillibrand <span class="full_name">Kirsten Elizabeth Rutnik Gillibrand</span></h2>
+			var name = element('h2', _data.title+'. '+_data.first_name+' '+_data.last_name);
+			var fullname = element('span', _data.first_name+' '+_data.middle_name+' '+_data.last_name);
+					fullname.className += 'full_name';
+			name.appendChild(fullname);
+			profile.appendChild(name);
+			// <p><small>Currently: In Office</small></p>
+			var currently = element('p');
+			var _in; // temp. holder
+			if (_data.in_office) _in = element('small', 'Currently: In Office');
+			else _in = element('small', 'Currently: Not In Office');
+			currently.appendChild(_in);
+			profile.appendChild(currently);
+			// <dl>
+			var fields = element('dl');
+			// <dt>Party</dt>
+			// <dd>D</dd>
+			fields.appendChild(definitionOf('Party', _data.party));
+			// <dt>State</dt>
+			// <dd>New York</dd>
+			fields.appendChild(definitionOf('State', _data.state_name));
+			// <dt>Chanmber</dt>
+			// <dd>Senate</dd>
+			fields.appendChild(definitionOf('Chamber', _data.chamber));
+			// <dt>District</dt>
+			// <dd>Null</dd>
+			if (_data.chamber === 'house') fields.appendChild(definitionOf('District', _data.district));
+			// <dt>State Rank</dt>
+			// <dd>Junior</dd>
+			fields.appendChild(definitionOf('State Rank', _data.state_rank));
+			// </dl>
+			profile.appendChild(fields);
+			// <article>
+			var article = element('article');
+			// <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/SenatorGillibrandpic.jpg/220px-SenatorGillibrandpic.jpg" alt="Kirsten Gillibrand">
+			article.appendChild(element('img', _data.profile_picture));
+			// <p>Kirsten Elizabeth Rutnik Gillibrand (born December 9, 1966) is an American politician and the junior United States Senator from New York. She is a member of the Democratic Party and former member of the United States House of Representatives from New York's 20th congressional district. In December 2008, then President-elect Barack Obama nominated Hillary Rodham Clinton as Secretary of State, leaving an empty seat in the New York senate delegation. After two months and many potential names considered, Governor David Paterson appointed Gillibrand to fill the seat. Gillibrand was required to run in a special election in 2010, which she won with 63% of the vote. She was re-elected to a full six-year term in 2012 with 72% of the vote, the highest margin for any statewide candidate in New York.<br><small><a href="https://en.wikipedia.org/wiki/Kirsten_Gillibrand">View full Wikipedia profile</a></small></p>
+			var bio = element('p');
+					bio.innerHTML = _data.bio;
+			article.appendChild(bio);
+			// article.appendChild(element('p', _data.bio));
+			// <dl>
+			var contact = element('dl');
+			// <dt>Office</dt>
+			// <dd>713 Hart Senate Office Building</dd>
+			contact.appendChild(definitionOf('Office', _data.office));
+			// <dt>Phone</dt>
+			// <dd>202-224-2315</dd>
+			contact.appendChild(definitionOf('Phone', _data.phone));
+			// <dt>Fax</dt>
+			// <dd>202-228-6321</dd>
+			contact.appendChild(definitionOf('Fax', _data.fax));
+
+			// <dt>Website</dt>
+			// <dd><a href="http://brown.senate.gov/">Website</a></dd>
+			contact.appendChild(definitionOf('Website', _data.website));
+
+			// <dt>Contact</dt>
+			// <dd><a href="http://www.brown.senate.gov/contact/">Contact form</a></dd>
+			contact.appendChild(definitionOf('Contact', _data.contact_form));
+			// </dl>
+			article.appendChild(contact);
+			// <dl>
+			var social = element('dl');
+			// <dt>Twitter</dt>
+			// <dd>@SenSherrodBrown</dd>
+			social.appendChild(definitionOf('Twitter', _data.twitter_id));
+			// <dt>YouTube</dt>
+			// <dd><a href="#">SherrodBrownOhio</a></dd>
+			social.appendChild(definitionOf('YouTube', _data.youtube_id));
+			// <dt>Facebook</dt>
+			// <dd><a href="#">109453899081640</a></dd>
+			social.appendChild(definitionOf('Facebook', _data.facebook_id));
+			// </dl>
+			article.appendChild(social);	
+			// </article>
+			profile.appendChild(article);
+			// </section>
+			// <-- done --> 
+			// return the completed object
+			// return article;
+			console.log(profile);
+			return profile;
+		}
+		// something went wrong
+		else {console.log('herp derp - from build()'); }
 		
-		// print(sunLightData);
-		// console.log(sunLightData);
-		// for (var uhh in sunLightData) {
-		// 	console.log(sunLightData[uhh]);
+		// var data = sunLightData.results;
+		// // console.log(data);
+
+		// var ul = document.createElement('ul');
+		// 		ul.className += 'representatives';
+
+		// for (var representative in data) {
+		// 	// console.log(data[representative]);
+		// 	var li = document.createElement('li');
+		// 			li.appendChild(rep_profile(data[representative]));
+
+		// 	ul.appendChild(li);
 		// }
 
-		var data = sunLightData.results;
-		// console.log(data);
-
-		var ul = document.createElement('ul');
-				ul.className += 'representatives';
-
-		for (var representative in data) {
-			// console.log(data[representative]);
-			var li = document.createElement('li');
-					li.appendChild(rep_profile(data[representative]));
-
-			ul.appendChild(li);
-		}
-
-		// append finished thing to DOM
-		clear(output);
-		print(ul);
+		// // append finished thing to DOM
+		// clear(output);
+		// print(ul);
 
 		// var SLData = sunLightData;
 		// var SLResults = SLData.results;
@@ -260,53 +367,6 @@ app.main = (function(){
 		// }
 
 		// target.innerHTML = resultsHTML;
-	}
-
-	// process data to make a profile for each representative
-	function rep_profile(_data) {
-		console.log('rep_profile');
-
-		/* make da elements | append da things */
-		/* =================================== */
-		// the big container
-		var article = document.createElement('article');
-				article.id += bioguide;
-				article.className += 'representative_profile';
-		// name
-		article.appendChild(element('h2', name));
-		article.appendChild(element('img','https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/SenatorGillibrandpic.jpg/220px-SenatorGillibrandpic.jpg'));
-		// political info
-		var political_info = element('ul');
-				political_info.className += 'political_info';
-				political_info.appendChild(element('li','Is currently in office: '+in_office));
-				political_info.appendChild(element('li',state));
-				political_info.appendChild(element('li',chamber));
-				political_info.appendChild(element('li',district));
-				political_info.appendChild(element('li',party));
-		article.appendChild(political_info);
-		// contact info
-		var contact_info = element('ul');
-				contact_info.className += 'contact_info';
-				contact_info.appendChild(element('li',office));
-				contact_info.appendChild(element('li',phone));
-				contact_info.appendChild(element('li',fax));
-				contact_info.appendChild(element('li',website));
-				contact_info.appendChild(element('li',contact));
-		article.appendChild(contact_info);
-		// social media
-		var social_media = element('ul');
-				social_media.className += 'social_media';
-				social_media.appendChild(element('li',twitter));
-				social_media.appendChild(element('li',facebook));
-				social_media.appendChild(element('li',youtube));
-		article.appendChild(social_media);
-
-
-
-		article.appendChild(document.createElement('hr'));
-		
-		console.log(article);
-		return article;
 	}
 
 	function validate() {
@@ -389,6 +449,14 @@ app.main = (function(){
 		}
 		return ele;
 	}
+	// makes <dd> and <dt>;
+	function definitionOf(_title, _definition) {
+		var frag = document.createDocumentFragment();
+		frag.appendChild(element('dt', _title));
+		frag.appendChild(element('dd', _definition));
+		return frag;
+	}
+
 	// print out stuff to the DOM
 	function print(_thing) {
 		// if output is not set it appends to the body
