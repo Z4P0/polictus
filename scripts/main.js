@@ -459,18 +459,12 @@ app.main = (function(){
 
 	// print out stuff to the DOM
 	function print(_thing) {
-		// if output is not set it appends to the body
-		// position: fixed; left: 0; right: 0; bottom: 0; font-size: 0.75em; padding: 1em; color: tomato;
-		// console.log('print');
-		// console.log(_thing);
-
-		// var p = document.createElement('p');
-		// p.appendChild(document.createTextNode(_thing));
 		output.appendChild(_thing);
 	}
 
 	//Public interface
 	return{
-		init : init
+		init : init,
+		dash : dash
 	}
 })();

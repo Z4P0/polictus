@@ -135,7 +135,10 @@ app.polictus = (function () {
 		}
 
 		// save polictus obj
-		localStorage.setItem('polictus', JSON.stringify(pol));		
+		localStorage.setItem('polictus', JSON.stringify(pol));
+
+		// build dashboard
+		app.main.dash();
 	}
 
 
