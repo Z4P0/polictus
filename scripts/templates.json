@@ -1,0 +1,8 @@
+[
+{"name": "Title", "template": "<h1 id=\"modTitleContent\"><span id=\"titleIndustry\">{{{industry}}}</span></h1>"},
+{"name": "Issue", "template": "<h2 id=\"modIssueContent\"><span id=\"titleIssue\">{{{issue}}}</span></h2>"},
+{"name": "LeftCol", "template": "<div id=\"leftContent\" class=\"modCol\"><h2>Materiality Score breakdown</h2><table id=\"EoI\"><tr><td id=\"lcol\">Evidence of Interest</td><td>{{{perception1}}}</td></tr><tr><td>Evidence of Economic Impact</td><td>{{{perception2}}}</td></tr><tr><td>Forward-Looking Adjustment</td><td>{{{perception3}}}</td></tr><tr class=\"hlight\"><td>Materiality Score</td><td>{{{mscore}}}</td></tr></table></div>"},
+{"name": "RightCol", "template": "<div id=\"rightContent\" class=\"modCol\"><h2 id=\"rightHeader\">Evidence of interest breakdown</h2><h3 id=\"t1\">Financial Test:<span class=\"fI\"> {{{test1}}}</span></h3><h3 id=\"t2\">Legal Test:<span class=\"fI\"> {{{test2}}}</span></h3><h3 id=\"t3\">Industry Norms Test:<span class=\"fI\"> {{{test3}}}</span></h3><h3 id=\"t4\">Stakeholder Test:<span class=\"fI\"> {{{test4}}}</span></h3><h3 id=\"t5\">Innovation Test:<span class=\"fI\"> {{{test5}}}</span></h3><h2 id=\"gS\">Frequency Score: {{{grossscore}}}</h2></div>"},
+{"name": "Materiality", "template": "<span id=\"materialityContent\"><h1 id=\"materiality\">{{{materiality}}}</h1></span>"},
+{"name": "Comment", "template": "<div id=\"comment\">{{{comment}}}</div>"}
+]

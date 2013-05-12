@@ -103,3 +103,12 @@ idea:
 
 
 Unique ID: The bioguide_id will be present and unique for all members of Congress. It is an official ID, assigned by Congress, and is the most suitable for use as a unique ID.
+
+
+Known Issues
+--------------------------------------------
+If geolocation is denied by browser, address form does not show
+
+Why not zipcodes is displayed unintentionally sometimes
+
+CSS screen width issues

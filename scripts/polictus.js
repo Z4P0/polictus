@@ -126,8 +126,8 @@ app.polictus = (function () {
 
 			// if the the last name can be found in the bio_summary we have the right match
 			if (name.test(bio_summary)) {
-				console.log('wiki for: '+reps[representative]['last_name']);
-				console.log(bio_summary);
+				// console.log('wiki for: '+reps[representative]['last_name']);
+				// console.log(bio_summary);
 				// add the info to the polictus obj
 				reps[representative]['profile_picture'] = image_url;
 				reps[representative]['bio'] = bio_summary;
