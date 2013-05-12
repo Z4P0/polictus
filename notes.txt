@@ -103,3 +103,34 @@ idea:
 
 
 Unique ID: The bioguide_id will be present and unique for all members of Congress. It is an official ID, assigned by Congress, and is the most suitable for use as a unique ID.
+
+
++ add classes to reprepsentative <dl>s
+	dl class="fields"
+	dl class="contact"
+	dl class="social_media"
+
+
+- sometimes the wrong wiki info is shown for the representative
+- showing 'null' in strings
+	ex. Dianne null Feinstein
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

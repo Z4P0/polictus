@@ -398,3 +398,7 @@ input[type="button"]:hover {
 .representative_profile dd {
   margin: 0 0 0.875em;
 }
+
+.fields dd {
+  text-transform: capitalize;
+}

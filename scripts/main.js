@@ -203,8 +203,8 @@ app.main = (function(){
 		// always returns a DOM obj
 
 		if (_something === 'representative_profile') {
-			console.log('make for:');
-			console.log(_data);
+			// console.log('make for:');
+			// console.log(_data);
 
 			// <section class="representative_profile" id="bioguide_id">
 			var profile = element('section');
@@ -225,6 +225,7 @@ app.main = (function(){
 			profile.appendChild(currently);
 			// <dl>
 			var fields = element('dl');
+					fields.className += 'fields';
 			// <dt>Party</dt>
 			// <dd>D</dd>
 			fields.appendChild(definitionOf('Party', _data.party));
@@ -246,13 +247,19 @@ app.main = (function(){
 			var article = element('article');
 			// <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/SenatorGillibrandpic.jpg/220px-SenatorGillibrandpic.jpg" alt="Kirsten Gillibrand">
 			article.appendChild(element('img', _data.profile_picture));
+
+			/* IF THE BIO IS EMPTY CALL WIKIPEDIA AGAIN */
+			// if (_data.bio === '') {};
 			// <p>Kirsten Elizabeth Rutnik Gillibrand (born December 9, 1966) is an American politician and the junior United States Senator from New York. She is a member of the Democratic Party and former member of the United States House of Representatives from New York's 20th congressional district. In December 2008, then President-elect Barack Obama nominated Hillary Rodham Clinton as Secretary of State, leaving an empty seat in the New York senate delegation. After two months and many potential names considered, Governor David Paterson appointed Gillibrand to fill the seat. Gillibrand was required to run in a special election in 2010, which she won with 63% of the vote. She was re-elected to a full six-year term in 2012 with 72% of the vote, the highest margin for any statewide candidate in New York.<br><small><a href="https://en.wikipedia.org/wiki/Kirsten_Gillibrand">View full Wikipedia profile</a></small></p>
 			var bio = element('p');
 					bio.innerHTML = _data.bio;
 			article.appendChild(bio);
 			// article.appendChild(element('p', _data.bio));
+
+
 			// <dl>
 			var contact = element('dl');
+					contact.className += 'contact';
 			// <dt>Office</dt>
 			// <dd>713 Hart Senate Office Building</dd>
 			contact.appendChild(definitionOf('Office', _data.office));
@@ -274,6 +281,7 @@ app.main = (function(){
 			article.appendChild(contact);
 			// <dl>
 			var social = element('dl');
+					social.className += 'social_media';
 			// <dt>Twitter</dt>
 			// <dd>@SenSherrodBrown</dd>
 			social.appendChild(definitionOf('Twitter', _data.twitter_id));
@@ -291,7 +299,7 @@ app.main = (function(){
 			// <-- done --> 
 			// return the completed object
 			// return article;
-			console.log(profile);
+			// console.log(profile);
 			return profile;
 		}
 		// something went wrong

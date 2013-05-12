@@ -88,18 +88,15 @@ app.polictus = (function () {
 
 				// wikipedia info
 				var wikiurl = 'https://en.wikipedia.org/wiki/'+data[representative]['first_name']+'_'+data[representative]['last_name'];
+				// make sure we have a valid wiki url
+				wikiurl = wikiurl.replace(' ','_'); // replace empty strings with underscores: _
+				wikiurl = wikiurl.replace('é','e'); // é --> e
 				rep.wikipedia = wikiurl;
+				// make wikipedia call
+				callWikipedia(wikiurl);
 
 				// push representative info to the polictus obj
 				pol.representatives.push(rep);
-
-				$.ajax({
-					url: wikiurl,
-						type: 'GET',
-						success: function(res) {
-							parseWiki(res.responseText);
-					}
-				});
 			}
 
 			// save polictus obj
@@ -107,13 +104,34 @@ app.polictus = (function () {
  		} // end if..loop
  	}
 
+	function callWikipedia(_wikiURL) {
+		// makes wiki call
+		// console.log('hello from: callWikipedia: '+_wikiURL);
+
+		$.ajax({
+			url: _wikiURL,
+				type: 'GET',
+				success: function(res) {
+					parseWiki(res.responseText);
+			}
+		});		
+	}
+
 	function parseWiki(_rawHTML) {
 		// this func parses it for:
 		// - summary bio
 		// - image url
+		console.log('parseWiki');
 		var start = _rawHTML.split(/(<table class="infobox vcard")/)[2];
+		if (start === undefined) {
+			// alert('thing');
+			console.log(_rawHTML);
+		}
 		var image_url = 'https:'+start.split(/(src=")/)[2].split(/(")\s/)[0];
 		var bio_summary = start.split(/(<\/table>)/)[2].split(/(<table )/)[0];
+		/* confirmed that the above is working fine (y) */
+		// console.log(image_url);
+		// console.log(bio_summary);
 
 		// get our saved Politicus object
 		var pol = JSON.parse(localStorage.getItem('polictus'));
@@ -122,23 +140,28 @@ app.polictus = (function () {
 		// which representative is the wiki data for?
 		for (var representative in reps) {
 			// setup regex test
-			var name = new RegExp(reps[representative]['last_name']);
+			// - we have to remove special characters like: é
+			var _name = reps[representative]['last_name'].replace('é', 'e');
+			var name = new RegExp(_name);
+			console.log(name);
 
 			// if the the last name can be found in the bio_summary we have the right match
 			if (name.test(bio_summary)) {
-				console.log('wiki for: '+reps[representative]['last_name']);
-				console.log(bio_summary);
+				// console.log('wiki for: '+reps[representative]['last_name']);
+				// console.log(bio_summary);
 				// add the info to the polictus obj
 				reps[representative]['profile_picture'] = image_url;
 				reps[representative]['bio'] = bio_summary;
 			}
 		}
 
+
 		// save polictus obj
 		localStorage.setItem('polictus', JSON.stringify(pol));
 
 		// build dashboard
-		app.main.dash();
+		console.log('commented out call to dash()');
+		// app.main.dash();
 	}
 
 
