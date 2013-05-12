@@ -105,32 +105,26 @@ idea:
 Unique ID: The bioguide_id will be present and unique for all members of Congress. It is an official ID, assigned by Congress, and is the most suitable for use as a unique ID.
 
 
-+ add classes to reprepsentative <dl>s
+
+
+
++ add classes to reprepsentative <dl>
 	dl class="fields"
 	dl class="contact"
 	dl class="social_media"
 
 
+
+Known Issues
+--------------------------------------------
+If geolocation is denied by browser, address form does not show
+
+Why not zipcodes is displayed unintentionally sometimes
+
+CSS screen width issues
 - sometimes the wrong wiki info is shown for the representative
 - showing 'null' in strings
 	ex. Dianne null Feinstein
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
