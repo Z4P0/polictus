@@ -95,6 +95,29 @@
 
   <section id="main" class="content">
     <div class="wrapper">
+      <nav class="controls">
+        <ul class="inline">
+          <li>
+            <i class="icon-search"></i><p>Search</p>
+            <ul>
+              <li><i class="icon-location-arrow"></i> By Address</li>
+              <li><i class="icon-group"></i> By representative</li>
+            </ul>
+          </li>
+          <li>
+            <i class="icon-user"></i><p>Profile</p>
+            <ul>
+              <li><i class="icon-plus"></i>&nbsp;<span>Add Interests</span></li>              
+            </ul>
+          </li>
+          <li>
+            <i class="icon-cog"></i><p>Settings</p>
+            <ul>
+              <li onclick="localStorage.removeItem('polictus'); alert('data cleared');"><i class="icon-eraser"></i> Clear all data</li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
       <section id="app">
         <img src="images/loader.gif">
         <p><small>Please wait while we load up the application</small></p>
@@ -111,48 +134,6 @@
           <hr>
         </article>      
       </section>
-<!--        <section class="representative_profile" id="bioguide_id">
-          <h2>Sen. Kirsten Gillibrand <span class="full_name">Kirsten Elizabeth Rutnik Gillibrand</span></h2>
-          <p><small>Currently: In Office</small></p>
-          <dl class="fields">
-            <dt>Party</dt>
-            <dd>D</dd>
-            <dt>State</dt>
-            <dd>New York</dd>
-            <dt>District</dt>
-            <dd>Null</dd>
-            <dt>Chanmber</dt>
-            <dd>Senate</dd>
-            <dt>State Rank</dt>
-            <dd>Junior</dd>
-          </dl>
-          <article>
-            <section class="bio">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/SenatorGillibrandpic.jpg/220px-SenatorGillibrandpic.jpg" alt="Kirsten Gillibrand">
-              <p>Kirsten Elizabeth Rutnik Gillibrand (born December 9, 1966) is an American politician and the junior United States Senator from New York. She is a member of the Democratic Party and former member of the United States House of Representatives from New York's 20th congressional district. In December 2008, then President-elect Barack Obama nominated Hillary Rodham Clinton as Secretary of State, leaving an empty seat in the New York senate delegation. After two months and many potential names considered, Governor David Paterson appointed Gillibrand to fill the seat. Gillibrand was required to run in a special election in 2010, which she won with 63% of the vote. She was re-elected to a full six-year term in 2012 with 72% of the vote, the highest margin for any statewide candidate in New York.<br><small><a href="https://en.wikipedia.org/wiki/Kirsten_Gillibrand">View full Wikipedia profile</a></small></p>              
-            </section>
-            <dl class="contact">
-              <dt>Office</dt>
-              <dd>713 Hart Senate Office Building</dd>
-              <dt>Phone</dt>
-              <dd>202-224-2315</dd>
-              <dt>Fax</dt>
-              <dd>202-228-6321</dd>
-              <dt>Website</dt>
-              <dd><a href="http://brown.senate.gov/">Website</a></dd>
-              <dt>Contact</dt>
-              <dd><a href="http://www.brown.senate.gov/contact/">Contact form</a></dd>
-            </dl>
-            <dl class="social">
-              <dt>Twitter</dt>
-              <dd>@SenSherrodBrown</dd>
-              <dt>YouTube</dt>
-              <dd><a href="#">SherrodBrownOhio</a></dd>
-              <dt>Facebook</dt>
-              <dd><a href="#">109453899081640</a></dd>
-            </dl>
-          </article>
-        </section>       -->
       <!-- empty container -->
       <section id="results">
       </section>
@@ -161,7 +142,6 @@
 
   <footer>
     <div class="wrapper">
-      <input type="button" value="clear localStorage" onclick="localStorage.removeItem('polictus');">
       <p>Made in Spring 2013. Luis Rosario &amp; Eric Bichan</p>
     </div>
   </footer>

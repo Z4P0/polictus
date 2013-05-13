@@ -12,7 +12,12 @@
   display: table;
 }
 .cf:after {clear: both;}
-.inline, .inline li {display: inline-block;}
+.inline li {
+	display: inline-block;
+	li {
+		display: block;
+	}
+}
 .assistive-text {
 	// based off of styles in wordpress theme twentyeleven
 	position:absolute !important;
@@ -56,4 +61,11 @@
 	border-bottom: 1px solid;
 	&:hover {cursor: pointer; color: lighten(#b92d19, 10%);}
 	@include transition(color, 0.3s);
+}
+.content {
+	padding-bottom: 2em;
+	margin-bottom: 3em;
+	aside {text-align: center; }
+	@include mq(netbook) {margin-top: 6em;}
+	@include transition(margin-top, 0.3s);
 }

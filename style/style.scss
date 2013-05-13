@@ -9,69 +9,61 @@
 
 /* base styles */
 @import "pieces/base";
-a {color: #b92d19;}
-h1 {
-	font-size: 3.75em;
-	text-transform: uppercase;
-	font-weight: normal;
-	line-height: 1.1;
-	margin: 0;
-	@include transition(font-size, 0.3s);
-}
-header {
-	text-align: center;
-	padding: 1em 0;
-	background-color: $background;
-	margin-bottom: 2em;
-	p {font-size: 0.875em; margin-bottom: 0; }
-	@include transition(text-align, 0.3s);
-}
-footer {
-	font-size: 0.6875em;
-	text-align: center;
-	padding: 1em;
-	background-color: $background;
-	@include mq(netbook) {
-		position: fixed;
-		bottom: 0;
-		left: 0;
-		right: 0;
-	}
-}
-input[type="text"] {
-	text-align: center;
-	padding: 0.5em 2.25em;
-	width: 50%;
-	max-width: 15em;
-	border-radius: 0.625em;
-}
-input[type="button"] {
-	$blue : #3a7cdb;
-	background-color: $blue;
-	color: #eee;
-	border: none;
-	padding: 0.5em 2.25em;
-	border-radius: 0.625em;
-	@include transition(background-color, 0.3s);
-	&:hover {
-		cursor: pointer;
-		text-shadow: 0 1px 3px #444;
-		background-color: lighten($blue, 10%);
-	}
-}
 @import "pieces/classes";
-.content {
-	padding-bottom: 2em;
-	margin-bottom: 3em;
-	aside {text-align: center; }
-	@include mq(netbook) {margin-top: 6em;}
-	@include transition(margin-top, 0.3s);
+
+
+
+/* nav (ui) styles */
+nav {
+	text-align:center;
+	max-width: 24em;
+	margin: 0 auto;
+	p,span {
+		font-size: 0.75em;
+		font-family: "Helvetica Neue", Arial, Verdana, sans-serif;
+		text-transform: uppercase;
+	}
+	li {
+		padding: 1em 1em 0.25em;
+		vertical-align: top;
+		color: #aaa;
+		width: 32%;
+		// background: rgba(25,0,255,0.3);
+		@include transition(color, 0.3s);
+		ul {
+			width: 300%;
+			display: none;
+			// background: rgba(255,0,0,0.3);
+			&:first-child {
+			}
+			li {
+				margin: 0;
+				padding: 0;
+				width: 100%;
+				text-align: left;
+				&:hover {
+					cursor: pointer;
+				}
+			}
+		}
+		&:hover {
+			color: #fff;
+			ul {
+				display: block;
+				height: auto;
+			}
+		}
+	}
 }
+.icon-cog:before {content: "\f013"; }
 
 
 
 
 
+
+
+/* app styles */
 #app {
 	text-align: center;
 	width: 50%;
@@ -87,9 +79,6 @@ input[type="button"] {
 	display: none;
 	margin-top: 2em;
 }
-
-
-
 #zipcode-info { // "Don't Use Zipcodes"
 	display: none;
 	text-align: left;
@@ -97,110 +86,9 @@ input[type="button"] {
 	max-width: 35em;
 	margin: 0 auto;
 }
-// Traditional scale //
-// --
-// 6  = 0.375em
-// 7  = 0.4375em
-// 8  = 0.5em
-// 9  = 0.5625em
-// 10 = 0.625em
-// 11 = 0.6875em
-// 12 = 0.75em
-// 14 = 0.875em
-// 16 = 1em
-// 18 = 1.125em
-// 21 = 1.3125em
-// 24 = 1.5em
-// 36 = 2.25em
-// 48 = 3em
-// 60 = 3.75em
-// 72 = 4.5em
 
+@import "pieces/dashboard";
+@import "pieces/representative";
 
-/* dashboard */
-#dashboard {
-	background-color: #ebebeb;
-	h1 {font-size: 2.25em; }
-	.content {color: $background; }
-}
-.full_name {
-	font-size: 0.625em;
-	color: #888;
-	// &:before {content: "( ";}
-	// &:after {content: " )";}
-	&:hover {color: lighten($background, 20%); }
-	@include transition(color, 0.3s);
-}
-
-
-
-.representatives {list-style-type: none; }
-.representative_profile {
-	border-bottom: 1px solid;
-	margin-bottom: 3em;
-	@extend .cf;
-	h2 {
-		font-size: 2.25em;
-		line-height: 1;
-		margin: 0;
-		span {
-			display: block;
-			@include mq(tablet) {
-				display: inline;
-				padding-left: 0.5em;
-			}
-		}
-	}
-	.fields {
-		width: 20%;
-		float: left;
-		margin: 0;
-		dd {text-transform: capitalize;}
-		@include mq(tablet) {
-			width: 15%;			
-		}
-	}		
-	article {
-		width: 80%;
-		float: right;
-		border-bottom: 1px solid;
-		margin-bottom: 2em;
-		@extend .cf;
-		img {
-			max-width: 220px;
-			max-height: 284px;
-			margin: 0 2em 2em 0;
-			@include mq(tablet) {float: left; }
-		}
-		@include mq(netbook) {width: 85%;}
-	}
-	section {
-		min-height: 284px;
-		@extend .cf;
-	}
-	.bio {
-		a {
-			color: inherit;
-			text-decoration: none;
-			&:hover {cursor: text;}
-		}
-	}
-	dt {
-		font-family: "Helvetica Neue", Arial, Verdana, sans-serif;
-		font-size: 0.6875em;
-		text-transform: uppercase;
-		font-weight: bold;
-	}
-	dd {margin:0 0 0.875em;}
-	.contact, .social {width: 50%; }
-	.contact {
-		float: left;
-		padding-right:0.5em;
-	}
-	.social {
-		float: right;
-		padding-left:0.5em;
-	}
-}
-
-
+// plugins
+@import "pieces/font-awesome";

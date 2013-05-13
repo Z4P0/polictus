@@ -1,0 +1,15 @@
+/* dashboard */
+#dashboard {
+	background-color: #ebebeb;
+	h1 {font-size: 2.25em; }
+	.content {color: $background; }
+	nav li:hover {
+		color: #000;
+	}
+}
+.full_name {
+	font-size: 0.625em;
+	color: #888;
+	&:hover {color: lighten($background, 20%); }
+	@include transition(color, 0.3s);
+}

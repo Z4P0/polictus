@@ -22,6 +22,17 @@ app.main = (function(){
 		// geocode setup
 		geocoder = new google.maps.Geocoder();
 
+		// hook up UI
+		document.getElementsByClassName('icon-location-arrow')[0].addEventListener('click', function() {
+			alert('thing');
+			show('address_form');
+		} , false);
+
+		var addInterest = document.getElementsByClassName('icon-plus')[0];
+		console.log(addInterest);
+		addInterest.addEventListener('click', function(e){alert('thing');}, false);
+
+
 		// is there polictus data?
 		// ===================================
 		if (localStorage.getItem('polictus') === null) show('start'); // no polictus data. create it
