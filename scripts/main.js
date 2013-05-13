@@ -66,11 +66,11 @@ app.main = (function(){
 			// <div id="address_form"> <input id="address" type="text" placeholder=" ex. 742 Evergreen Terrace, Springfield"><br> <input type="button" value="Search" id="address_btn"> </div>
       var div = element('div');
       		div.id = 'address_form';
-      var p = element('p', 'Please enter a street address or city name');
+      var p = element('p', 'Please enter a street address or city name and state');
       		div.appendChild(p);
       var address = element('input');
 					address.setAttribute('type','text');
-					address.setAttribute('placeholder',' ex. 742 Evergreen Terrace, Springfield');
+					address.setAttribute('placeholder',' ex. Oakland NJ');
 					address.setAttribute('id','address');
 					address.addEventListener('keypress', function (e) {if (e.keyCode === 13) {codeAddress(); } }, false);					
 					div.appendChild(address);

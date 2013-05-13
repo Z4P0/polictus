@@ -9,6 +9,8 @@ app.polictus = (function () {
 
 	// API vars
 	// ===================================
+
+	var PROXY_URL = "proxy.php?filename=";
 	// sunlight
 	var SUNLIGHT_API_URL = "http://congress.api.sunlightfoundation.com/";
 	// var SUNLIGHT_API_KEY = "6cd4ec29bfbf46819f41b6ae97b575af"; // eric's key
@@ -105,9 +107,25 @@ app.polictus = (function () {
 			// save polictus obj
 			localStorage.setItem('polictus', JSON.stringify(pol));
  		} else if (_from === 'govtrack') {
+ 			var numBills = 10;
  			// parse govtrack json
- 			console.log('parse govtrack');
- 			console.log(_data);
+ 			// console.log('parse govtrack');
+ 			var GTbioguide_id = _data.objects[0].person.bioguideid;
+ 			// console.log(_data);
+ 			// console.log(pol);
+
+ 			for (var i = 0; i < pol.representatives.length; i++) {
+ 				if(pol.representatives[i].bioguide_id == GTbioguide_id){
+ 					// this is slooooooooow
+ 					// pol.representatives[i].bills = _data.objects.splice(100-numBills, numBills);
+ 					pol.representatives[i].bills = _data.objects;
+
+ 				}
+ 			};
+ 			localStorage.setItem('polictus', JSON.stringify(pol));
+ 			console.log("pol2");
+
+ 			console.log(pol);
  		} // end if..loop
  	}
 
@@ -148,16 +166,22 @@ app.polictus = (function () {
 		localStorage.setItem('polictus', JSON.stringify(pol));
 
 		// call govtrack API for their last 10 votes
-		var govtrack_url = GOVTRACK_API_URL + 'vote_voter/?person='+rep.govtrack_id+'&limit=10&order_by=-created';
-		console.log(govtrack_url);
-		$.ajax({
-		  url: govtrack_url,
-		  context: document.body
-		}).done(
-			function(data){
-				parseJSON('govtrack', data);
-			}
-		);
+		var govtrack_url = GOVTRACK_API_URL + 'vote_voter/?person='+rep.govtrack_id+'&limit=5&order_by=-created';
+		// console.log("YOOOOO: " + PROXY_URL + govtrack_url);
+		// $.getJSON( govtrack_url, function ( data ) { console.log(data); } );
+		$.ajax(
+		{
+		  type: "GET",
+		  url: PROXY_URL + govtrack_url,
+		  contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function(data){
+          	parseJSON('govtrack', data);
+          }
+
+		  // dataType: "jsonp"
+		  //we are specifying our callback in the url
+		});
 
 		// build dashboard
 		
