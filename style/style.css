@@ -3,6 +3,12 @@
   src: url("fonts/AbrahamLincoln.ttf") format("truetype");
 }
 
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
 /* normalize.css v2.1.0 | MIT License | git.io/normalize */
 article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary {
   display: block;
@@ -24,9 +30,6 @@ html {
 
 body {
   margin: 0;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
 }
 
 a:focus, .mimic_link:focus {
@@ -192,19 +195,30 @@ input[type="button"]:hover {
 
 .wrapper {
   position: relative;
-  width: 80%;
+  width: 90%;
   max-width: 1024px;
   margin: 0 auto;
+  -webkit-transition: width 0.3s ease-out;
+  -moz-transition: width 0.3s ease-out;
+  -o-transition: width 0.3s ease-out;
+  transition: width 0.3s ease-out;
+}
+@media only screen and (min-width: 480px) {
+  .wrapper {
+    width: 80%;
+  }
 }
 
-.cf:before, .representative_profile article:before,
+.cf:before, .representative_profile:before, .representative_profile article:before, .representative_profile section:before,
 .cf:after,
-.representative_profile article:after {
+.representative_profile:after,
+.representative_profile article:after,
+.representative_profile section:after {
   content: " ";
   display: table;
 }
 
-.cf:after, .representative_profile article:after {
+.cf:after, .representative_profile:after, .representative_profile article:after, .representative_profile section:after {
   clear: both;
 }
 
@@ -334,7 +348,6 @@ input[type="button"]:hover {
 }
 
 .full_name {
-  padding-left: 0.5em;
   font-size: 0.625em;
   color: #888;
   -webkit-transition: color 0.3s ease-out;
@@ -342,14 +355,8 @@ input[type="button"]:hover {
   -o-transition: color 0.3s ease-out;
   transition: color 0.3s ease-out;
 }
-.full_name:before {
-  content: "( ";
-}
-.full_name:after {
-  content: " )";
-}
 .full_name:hover {
-  color: #3c3c3c;
+  color: #555555;
 }
 
 .representatives {
@@ -365,29 +372,58 @@ input[type="button"]:hover {
   line-height: 1;
   margin: 0;
 }
-.representative_profile img {
+.representative_profile h2 span {
+  display: block;
+}
+@media only screen and (min-width: 480px) {
+  .representative_profile h2 span {
+    display: inline;
+    padding-left: 0.5em;
+  }
+}
+.representative_profile .fields {
+  width: 20%;
+  float: left;
+  margin: 0;
+}
+.representative_profile .fields dd {
+  text-transform: capitalize;
+}
+@media only screen and (min-width: 480px) {
+  .representative_profile .fields {
+    width: 15%;
+  }
+}
+.representative_profile article {
+  width: 80%;
+  float: right;
+  border-bottom: 1px solid;
+  margin-bottom: 2em;
+}
+.representative_profile article img {
   max-width: 220px;
   max-height: 284px;
   margin: 0 2em 2em 0;
-}
-.representative_profile article {
-  display: inline-block;
-  border-bottom: 1px solid;
-  margin-bottom: 2em;
-  max-width: 45em;
 }
 @media only screen and (min-width: 480px) {
   .representative_profile article img {
     float: left;
   }
 }
-.representative_profile article p:only-child {
+@media only screen and (min-width: 768px) {
+  .representative_profile article {
+    width: 85%;
+  }
+}
+.representative_profile section {
   min-height: 284px;
 }
-.representative_profile dl {
-  display: inline-block;
-  vertical-align: top;
-  margin: 0 4em 2em 0;
+.representative_profile .bio a, .representative_profile .bio .mimic_link {
+  color: inherit;
+  text-decoration: none;
+}
+.representative_profile .bio a:hover, .representative_profile .bio .mimic_link:hover {
+  cursor: text;
 }
 .representative_profile dt {
   font-family: "Helvetica Neue", Arial, Verdana, sans-serif;
@@ -398,7 +434,14 @@ input[type="button"]:hover {
 .representative_profile dd {
   margin: 0 0 0.875em;
 }
-
-.fields dd {
-  text-transform: capitalize;
+.representative_profile .contact, .representative_profile .social {
+  width: 50%;
+}
+.representative_profile .contact {
+  float: left;
+  padding-right: 0.5em;
+}
+.representative_profile .social {
+  float: right;
+  padding-left: 0.5em;
 }

@@ -1,8 +1,10 @@
 .wrapper {
 	position: relative;
-	width: 80%;
+	width: 90%;
 	max-width: 1024px;
 	margin: 0 auto;
+	@include mq(tablet) {width: 80%;}
+	@include transition(width, 0.3s);
 }
 .cf:before,
 .cf:after {

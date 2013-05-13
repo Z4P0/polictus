@@ -41,8 +41,10 @@ app.polictus = (function () {
 	 			"email" : "",
 	 			"interests" : []
 	 		},
-	 		"representatives" : []
+	 		"representatives" : [],
+	 		"ready" : 0
 	 	}
+	 	console.log(polictus);
 	 	// store it
 		localStorage.setItem('polictus', JSON.stringify(polictus));
 	 	
@@ -106,8 +108,6 @@ app.polictus = (function () {
 
 	function callWikipedia(_wikiURL) {
 		// makes wiki call
-		// console.log('hello from: callWikipedia: '+_wikiURL);
-
 		$.ajax({
 			url: _wikiURL,
 				type: 'GET',
@@ -129,9 +129,9 @@ app.polictus = (function () {
 		}
 		var image_url = 'https:'+start.split(/(src=")/)[2].split(/(")\s/)[0];
 		var bio_summary = start.split(/(<\/table>)/)[2].split(/(<table )/)[0];
+		bio_summary = bio_summary.replace('<p>','').replace('</p>',''); // parse off <p> and </p>
 		/* confirmed that the above is working fine (y) */
-		// console.log(image_url);
-		// console.log(bio_summary);
+		/* it's getting the right url that's the issue */
 
 		// get our saved Politicus object
 		var pol = JSON.parse(localStorage.getItem('polictus'));
@@ -161,7 +161,9 @@ app.polictus = (function () {
 
 		// build dashboard
 		console.log('commented out call to dash()');
-		// app.main.dash();
+		
+		/* dash() only runs after all profiles are complete */
+		app.main.dash();
 	}
 
 

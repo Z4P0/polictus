@@ -21,7 +21,8 @@ polictus = {
 			name: "other senator",
 			[all other info]
 		}
-	]
+	],
+	reader : 0
 }
 
 
@@ -50,7 +51,7 @@ title=Kirsten_Gillibrand|Chuck_Schumer/summary|main_image
 start:
 	is there a polictus object stored locally?
 		√ yes
-			parse it
+			√ parse it
 			build gui
 		√ no:
 			√ determine which representatives to show [html5 geolocation]
@@ -85,6 +86,7 @@ start:
 dope:
 	bill information:
 	http://www.govtrack.us/developers/api
+	
 	plotical players:
 	http://data.influenceexplorer.com/api/aggregates/contributions/?r
 
@@ -108,13 +110,6 @@ Unique ID: The bioguide_id will be present and unique for all members of Congres
 
 
 
-+ add classes to reprepsentative <dl>
-	dl class="fields"
-	dl class="contact"
-	dl class="social_media"
-
-
-
 Known Issues
 --------------------------------------------
 If geolocation is denied by browser, address form does not show
@@ -122,9 +117,6 @@ If geolocation is denied by browser, address form does not show
 Why not zipcodes is displayed unintentionally sometimes
 
 CSS screen width issues
-- sometimes the wrong wiki info is shown for the representative
-- showing 'null' in strings
-	ex. Dianne null Feinstein
 
 
 

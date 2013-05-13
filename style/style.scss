@@ -124,12 +124,11 @@ input[type="button"] {
 	.content {color: $background; }
 }
 .full_name {
-	padding-left: 0.5em;
 	font-size: 0.625em;
 	color: #888;
-	&:before {content: "( ";}
-	&:after {content: " )";}
-	&:hover {color: lighten($background, 10%); }
+	// &:before {content: "( ";}
+	// &:after {content: " )";}
+	&:hover {color: lighten($background, 20%); }
 	@include transition(color, 0.3s);
 }
 
@@ -139,29 +138,52 @@ input[type="button"] {
 .representative_profile {
 	border-bottom: 1px solid;
 	margin-bottom: 3em;
+	@extend .cf;
 	h2 {
 		font-size: 2.25em;
 		line-height: 1;
 		margin: 0;
+		span {
+			display: block;
+			@include mq(tablet) {
+				display: inline;
+				padding-left: 0.5em;
+			}
+		}
 	}
-	img {
-		max-width: 220px;
-		max-height: 284px;
-		margin: 0 2em 2em 0;
-	}
+	.fields {
+		width: 20%;
+		float: left;
+		margin: 0;
+		dd {text-transform: capitalize;}
+		@include mq(tablet) {
+			width: 15%;			
+		}
+	}		
 	article {
-		display: inline-block;
+		width: 80%;
+		float: right;
 		border-bottom: 1px solid;
 		margin-bottom: 2em;
-		max-width: 45em;
 		@extend .cf;
-		img {@include mq(tablet) {float: left; }}
-		p:only-child {min-height: 284px;}
+		img {
+			max-width: 220px;
+			max-height: 284px;
+			margin: 0 2em 2em 0;
+			@include mq(tablet) {float: left; }
+		}
+		@include mq(netbook) {width: 85%;}
 	}
-	dl {
-		display: inline-block;
-		vertical-align: top;
-		margin: 0 4em 2em 0;
+	section {
+		min-height: 284px;
+		@extend .cf;
+	}
+	.bio {
+		a {
+			color: inherit;
+			text-decoration: none;
+			&:hover {cursor: text;}
+		}
 	}
 	dt {
 		font-family: "Helvetica Neue", Arial, Verdana, sans-serif;
@@ -169,10 +191,16 @@ input[type="button"] {
 		text-transform: uppercase;
 		font-weight: bold;
 	}
-	dd {margin:0 0 0.875em; }
-}
-.fields {
-	dd {text-transform: capitalize;}
+	dd {margin:0 0 0.875em;}
+	.contact, .social {width: 50%; }
+	.contact {
+		float: left;
+		padding-right:0.5em;
+	}
+	.social {
+		float: right;
+		padding-left:0.5em;
+	}
 }
 
 

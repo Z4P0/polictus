@@ -16,8 +16,6 @@ app.main = (function(){
 
 
 	function init (){
-		console.log("initializing!");
-
 		// set up DOM references
 		output = document.getElementById('results');
 		_app = document.getElementById('app');
@@ -133,34 +131,52 @@ app.main = (function(){
 	}
 
 	// the dashboard
-	// this builds HTML from reading 
 	function dash() {
-		console.log('hello from: dash');
-
-		// set <body> id="dashboard"
-		document.getElementsByTagName('body')[0].id='dashboard';
-
+		// we have to make sure the all the data is ready
 		// get the polictus obj
-		var pol = localStorage.getItem('polictus');
-		pol = JSON.parse(pol);
-		// console.log(pol);
+		var pol = JSON.parse(localStorage.getItem('polictus'));
 
-		// create list of representatives
-		// var representatives = element('ul');
-		// for each representative..
-		clear(output);
-		console.log("blah" + pol['representatives']);
-		for (var representative in pol['representatives']) {
-			console.log("Yoo "+representative);
-			// build their profile, with their data
-			// var rep = element('li');
-			build('representative_profile', pol['representatives'][representative]);
-			// representatives.appendChild(rep);
+		/**
+		 * we increment the polictus.ready value by 1
+		 * until it matches the length of representatives we have
+		 * - this prevents us from building DOM elements with information missing
+		 */
+		if (pol.ready === pol.representatives.length-1) {
+			// object is ready
+
+			// set <body> id="dashboard"
+			document.getElementsByTagName('body')[0].id='dashboard';
+			
+			// clear our target object
+			clear(output);
+
+			// for each representative..
+			for (var representative in pol['representatives']) {
+				// build their profile, with their data
+				build('representative_profile', pol['representatives'][representative]);
+			}
+
+			/**
+			 * since we're hacking the info from wikipedia
+			 * it comes with the raw <a href="#"> tags in it
+			 * we need to cancel those default actions
+			 * - we set their hrefs to javascript: void(0);
+			 */
+			var bios = document.getElementsByClassName('bio');
+			for (var i = 0; i < bios.length; i++) {
+				var links = bios[i].getElementsByTagName('a');
+				for (var j = 0; j < links.length; j++) {links[j].href='javascript: void(0);'; };
+			};
+
+			// show dashboard menu
+			show('dashboard');			
 		}
-		// output.appendChild(representatives);
-
-		// show dashboard menu
-		show('dashboard');
+		else {
+			// increment
+			pol.ready++;
+			// save
+			localStorage.setItem('polictus', JSON.stringify(pol));
+		}
 	}
 
 
@@ -201,9 +217,6 @@ app.main = (function(){
 
 
 	function build(_something, _data){
-		console.log('hello from: build');
-		// always returns a DOM obj
-
 		if (_something === 'representative_profile') {
 			// icanhaz makes the DOM elements
 			var rep = ich.repTemplate(_data);
@@ -212,6 +225,7 @@ app.main = (function(){
 		// something went wrong
 		else {console.log('herp derp - from build()'); }
 	}
+
 
 	function validate() {
 		// get DOM value
