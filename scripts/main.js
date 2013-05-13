@@ -169,7 +169,8 @@ app.main = (function(){
 			};
 
 			// show dashboard menu
-			show('dashboard');			
+			show('dashboard');
+			console.log(pol);
 		}
 		else {
 			// increment

@@ -11,28 +11,24 @@ app.polictus = (function () {
 	// ===================================
 	// sunlight
 	var SUNLIGHT_API_URL = "http://congress.api.sunlightfoundation.com/";
-	// eric's key
-	// var SUNLIGHT_API_KEY = "6cd4ec29bfbf46819f41b6ae97b575af";
-	// luis' key
-	var SUNLIGHT_API_KEY = '&apikey=380054b03efa4f4191c92664fc42904d';
+	// var SUNLIGHT_API_KEY = "6cd4ec29bfbf46819f41b6ae97b575af"; // eric's key
+	var SUNLIGHT_API_KEY = '&apikey=380054b03efa4f4191c92664fc42904d'; // luis' key
 
-	
+
+	// govtrack
+	var GOVTRACK_API_URL = 'http://www.govtrack.us/api/v2/';
+
+
 	// opensecret
 	var OPENSECRET_API_URL = "http://www.opensecrets.org/api/";
 	var OPENSECRET_API_KEY = "c22a9e40689163468d0501d8ee887c8d";
 	///http://congress.api.sunlightfoundation.com/bills?apikey=6cd4ec29bfbf46819f41b6ae97b575af
 	//http://www.opensecrets.org/api/?method=candSummary&cid=N00007360&cycle=2005&apikey=c22a9e40689163468d0501d8ee887c8d&output=json
-
-
-	// Data holders
-	var sunLightData;
-	var openSecretData;
+	// ===================================
 
 
 
 	function Polictus (_latitude,_longitude) {
-	 	console.log('hello from: Polictus');
-
 	 	// make our polictus obj
 	 	var polictus = {
 	 		"citizen" : {
@@ -44,7 +40,6 @@ app.polictus = (function () {
 	 		"representatives" : [],
 	 		"ready" : 0
 	 	}
-	 	console.log(polictus);
 	 	// store it
 		localStorage.setItem('polictus', JSON.stringify(polictus));
 	 	
@@ -60,8 +55,7 @@ app.polictus = (function () {
 		);
 
 		/* ----------- process ------------ */
-		/* sunlight > wikipedia > gov track & influence explorer */
-		/* when done..  */
+		/* sunlight --> wikipedia --> gov track & influence explorer */
 	}
  	/* ============== end constructor =============== */
 
@@ -95,7 +89,14 @@ app.polictus = (function () {
 				wikiurl = wikiurl.replace('é','e'); // é --> e
 				rep.wikipedia = wikiurl;
 				// make wikipedia call
-				callWikipedia(wikiurl);
+				// makes wiki call
+				$.ajax({
+					url: wikiurl,
+						type: 'GET',
+						success: function(res) {
+							parseWiki(res.responseText);
+					}
+				});					
 
 				// push representative info to the polictus obj
 				pol.representatives.push(rep);
@@ -103,64 +104,62 @@ app.polictus = (function () {
 
 			// save polictus obj
 			localStorage.setItem('polictus', JSON.stringify(pol));
+ 		} else if (_from === 'govtrack') {
+ 			// parse govtrack json
+ 			console.log('parse govtrack');
+ 			console.log(_data);
  		} // end if..loop
  	}
 
-	function callWikipedia(_wikiURL) {
-		// makes wiki call
-		$.ajax({
-			url: _wikiURL,
-				type: 'GET',
-				success: function(res) {
-					parseWiki(res.responseText);
-			}
-		});		
-	}
-
 	function parseWiki(_rawHTML) {
 		// this func parses it for:
-		// - summary bio
-		// - image url
-		console.log('parseWiki');
+		// summary bio & image url
 		var start = _rawHTML.split(/(<table class="infobox vcard")/)[2];
-		if (start === undefined) {
-			// alert('thing');
-			console.log(_rawHTML);
-		}
 		var image_url = 'https:'+start.split(/(src=")/)[2].split(/(")\s/)[0];
 		var bio_summary = start.split(/(<\/table>)/)[2].split(/(<table )/)[0];
-		bio_summary = bio_summary.replace('<p>','').replace('</p>',''); // parse off <p> and </p>
-		/* confirmed that the above is working fine (y) */
-		/* it's getting the right url that's the issue */
+				bio_summary = bio_summary.replace('<p>','').replace('</p>',''); // parse off <p> and </p>
+				/* confirmed that the above is working fine (y) */
+				/* it's getting the right url that's the issue */
 
 		// get our saved Politicus object
 		var pol = JSON.parse(localStorage.getItem('polictus'));
 		var reps = pol.representatives;
 
 		// which representative is the wiki data for?
+		var rep;		
+
 		for (var representative in reps) {
 			// setup regex test
 			// - we have to remove special characters like: é
 			var _name = reps[representative]['last_name'].replace('é', 'e');
 			var name = new RegExp(_name);
-			console.log(name);
 
 			// if the the last name can be found in the bio_summary we have the right match
 			if (name.test(bio_summary)) {
-				// console.log('wiki for: '+reps[representative]['last_name']);
-				// console.log(bio_summary);
 				// add the info to the polictus obj
 				reps[representative]['profile_picture'] = image_url;
 				reps[representative]['bio'] = bio_summary;
+				// we know who we're working with
+				rep = reps[representative];
 			}
 		}
-
 
 		// save polictus obj
 		localStorage.setItem('polictus', JSON.stringify(pol));
 
+		// call govtrack API for their last 10 votes
+		var govtrack_url = GOVTRACK_API_URL + 'vote_voter/?person='+rep.govtrack_id+'&limit=10&order_by=-created';
+		console.log(govtrack_url);
+		$.ajax({
+		  url: govtrack_url,
+		  context: document.body
+		}).done(
+			function(data){
+				parseJSON('govtrack', data);
+			}
+		);
+
 		// build dashboard
-		console.log('commented out call to dash()');
 		
 		/* dash() only runs after all profiles are complete */
 		app.main.dash();
