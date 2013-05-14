@@ -109,7 +109,13 @@ idea:
 		(drug war, internet freedom [cispa], gay marriage, gun control)
 		via: govtrack? (y)
 
+	reports on what your representatives did
+		weekly
+		monthly
+		daily
 
+	during election time view a summary on their voting record
+	(be able to see if the representative agrees with their views)
 
 
 
