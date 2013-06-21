@@ -1,3 +1,32 @@
+TODO
+----------------------------
+- set up a dev environment that won't affect the 'working' live version
+	http://dev.polict.us
+- so what's the site for?
+	what's it offer?
+
+FIX
+----------------------------
+- if geolocation is denied by browser, address form does not show
+- "why not zipcodes" is displayed unintentionally sometimes, or left orphaned
+- info from wikipedia is still wonky
+
+FEATURE IDEAS
+----------------------------
+- submit your email to receive updates based on your interests/issues
+- select interests/issues that you want to be notified about
+- notifications will be sent when there is a bill introduced that might affect your interests (drug war, internet freedom [cispa], gay marriage, gun control)
+- reports on what your representatives did (weekly, monthly, daily)
+- during election time view a summary on their voting record (be able to see if the representative agrees with their views)
+- can we do IP sniffing to determine where the user might be without having to use html5 geolocation?
+
+===================================
+
+
+
+
+The Polictus Object
+===================================
 polictus = {
 	citizen : {
 		name : "patriot",
@@ -24,27 +53,7 @@ polictus = {
 	],
 	reader : 0
 }
-
-
-
-
-
-==
-credits:
-SUNLIGHT FOUNDATION!! OMG SRSLY <3
-Wikipedia
-
-
 ===================================
-first time messing with wikipedia
-they're api isn't what you expect.
-i expected to be able to make calls for specific content from pages
-maybe something like
-title=Kirsten_Gillibrand|Chuck_Schumer/summary|main_image
-
-
-
-
 
 
 
@@ -102,37 +111,15 @@ dope:
 
 
 
-idea:
-	submit your email
-	select some basic interests
-		- email notifications will be sent when there is a bill introduced that might affect your interests
-		(drug war, internet freedom [cispa], gay marriage, gun control)
-		via: govtrack? (y)
-
-	reports on what your representatives did
-		weekly
-		monthly
-		daily
-
-	during election time view a summary on their voting record
-	(be able to see if the representative agrees with their views)
-
-
-
-
 Unique ID: The bioguide_id will be present and unique for all members of Congress. It is an official ID, assigned by Congress, and is the most suitable for use as a unique ID.
 
 
 
+===================================
+bug archive
 
-
-Known Issues
---------------------------------------------
-If geolocation is denied by browser, address form does not show
-
-Why not zipcodes is displayed unintentionally sometimes
-
-CSS screen width issues
-
-
-
+_polictus = new app.polictus.Polictus(results[0].geometry.location.kb,results[0].geometry.location.jb);
+// }_polictus = new app.polictus.Polictus(results[0].geometry.location.kb,results[0].geometry.location.lb);
+// ^ google changed a letter that broke everything lawl.............. ^
+also, the values had to be switched around
+we were passing in latitude as longitude and vice versa
