@@ -11,7 +11,10 @@
 @import "pieces/base";
 @import "pieces/classes";
 
-
+#clearData {
+	display: inline-block;
+	margin-bottom: 1em;
+}
 
 /* nav (ui) styles */
 nav {

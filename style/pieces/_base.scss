@@ -37,7 +37,8 @@ input[type="text"] {
 	max-width: 15em;
 	border-radius: 0.625em;
 }
-input[type="button"] {
+input[type="button"],
+.button {
 	$blue : #3a7cdb;
 	background-color: $blue;
 	color: #eee;

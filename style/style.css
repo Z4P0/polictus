@@ -146,7 +146,8 @@ input[type="text"] {
   border-radius: 0.625em;
 }
 
-input[type="button"] {
+input[type="button"],
+.button {
   background-color: #3a7cdb;
   color: #eee;
   border: none;
@@ -157,7 +158,8 @@ input[type="button"] {
   -o-transition: background-color 0.3s ease-out;
   transition: background-color 0.3s ease-out;
 }
-input[type="button"]:hover {
+input[type="button"]:hover,
+.button:hover {
   cursor: pointer;
   text-shadow: 0 1px 3px #444444;
   background-color: #6599e3;
@@ -310,6 +312,11 @@ footer p {
   .content {
     margin-top: 6em;
   }
+}
+
+#clearData {
+  display: inline-block;
+  margin-bottom: 1em;
 }
 
 /* nav (ui) styles */
