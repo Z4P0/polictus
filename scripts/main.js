@@ -23,14 +23,14 @@ app.main = (function(){
 		geocoder = new google.maps.Geocoder();
 
 		// hook up UI
-		document.getElementsByClassName('icon-location-arrow')[0].addEventListener('click', function() {
-			alert('thing');
-			show('address_form');
-		} , false);
+		// document.getElementsByClassName('icon-location-arrow')[0].addEventListener('click', function() {
+		// 	alert('thing');
+		// 	show('address_form');
+		// } , false);
 
-		var addInterest = document.getElementsByClassName('icon-plus')[0];
-		console.log(addInterest);
-		addInterest.addEventListener('click', function(e){alert('thing');}, false);
+		// var addInterest = document.getElementsByClassName('icon-plus')[0];
+		// console.log(addInterest);
+		// addInterest.addEventListener('click', function(e){alert('thing');}, false);
 
 
 		// is there polictus data?
@@ -212,9 +212,12 @@ app.main = (function(){
 	  if (address !== '') {
 		  geocoder.geocode( { 'address': address}, function(results, status) {
 		    if (status == google.maps.GeocoderStatus.OK) {
+		    	// DEBUG
+		    	console.log(results[0]);
+
 				  // call APIs -> build polictus obj
-					_polictus = new app.polictus.Polictus(results[0].geometry.location.kb,results[0].geometry.location.lb);
-		    }
+					_polictus = new app.polictus.Polictus(results[0].geometry.location.jb,results[0].geometry.location.kb);
+				}
 		    else {alert('Geocode was not successful for the following reason: ' + status); }
 		  });
 		}

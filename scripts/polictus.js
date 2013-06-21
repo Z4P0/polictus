@@ -45,6 +45,9 @@ app.polictus = (function () {
 	 	// store it
 		localStorage.setItem('polictus', JSON.stringify(polictus));
 	 	
+	 	// ================ debugging =================
+	 	console.log('latitude: '+_latitude+'\nlongitude: '+_longitude);
+	 	// ============================================
 
 	 	// make Sunlight API call
 		$.ajax({
@@ -52,6 +55,7 @@ app.polictus = (function () {
 		  context: document.body
 		}).done(
 			function(data){
+				console.log(data);
 				parseJSON('sunlight', data);
 			}
 		);
