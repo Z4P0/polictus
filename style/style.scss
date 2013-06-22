@@ -16,6 +16,10 @@
 	margin-bottom: 1em;
 }
 
+.small {
+	font-size: 0.75em;
+}
+
 /* nav (ui) styles */
 nav {
 	text-align:center;
@@ -69,7 +73,7 @@ nav {
 /* app styles */
 #app {
 	text-align: center;
-	width: 50%;
+	width: 75%;
 	margin: 0 auto 4em;
 	img {margin-bottom: 1em; }
 	input[type="button"] {margin-bottom: 3em; }

@@ -319,6 +319,10 @@ footer p {
   margin-bottom: 1em;
 }
 
+.small {
+  font-size: 0.75em;
+}
+
 /* nav (ui) styles */
 nav {
   text-align: center;
@@ -368,7 +372,7 @@ nav li:hover ul {
 /* app styles */
 #app {
   text-align: center;
-  width: 50%;
+  width: 75%;
   margin: 0 auto 4em;
 }
 #app img {

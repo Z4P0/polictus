@@ -95,48 +95,12 @@
 
   <section id="main" class="content">
     <div class="wrapper">
-<!--       <nav class="controls">
-        <ul class="inline">
-          <li>
-            <i class="icon-search"></i><p>Search</p>
-            <ul>
-              <li><i class="icon-location-arrow"></i> By Address</li>
-              <li><i class="icon-group"></i> By representative</li>
-            </ul>
-          </li>
-          <li>
-            <i class="icon-user"></i><p>Profile</p>
-            <ul>
-              <li><i class="icon-plus"></i>&nbsp;<span>Add Interests</span></li>
-            </ul>
-          </li>
-          <li>
-            <i class="icon-cog"></i><p>Settings</p>
-            <ul>
-              <li onclick="localStorage.removeItem('polictus'); alert('data cleared');"><i class="icon-eraser"></i> Clear all data</li>
-            </ul>
-          </li>
-        </ul>
-      </nav> -->
       <section id="app">
         <img src="images/loader.gif">
         <p><small>Please wait while we load up the application</small></p>
       </section>
-      <section>
-        <!-- zipcode info -->
-        <article id="zipcode-info">
-          <h2>Don't Use Zipcodes</h2>
-          <p>A zip code may intersect multiple Congressional districts, so locating by zip may return multiple representatives, and possibly more than 2 senators if the zip code crosses state borders.</p>
-          <p>The first complication is probably obvious: zip codes and congressional districts aren't the same thing. A zip code can span more than one district (or even more than one state!), so if you want to support zip lookups for your users, you'll have to support cases where more than one matching district is returned.</p>
-          <p>Zip codes are lines, in other words, while congressional districts are polygons. This means that mapping zips to congressional districts is an inherently imperfect process.</p>
-          <p>The government uses something called a zip code tabulation area (ZCTA) to approximate the geographic footprint of a given zip as a polygon, and this is what we use to map zip codes to congressional districts. But it really is just an approximation -- it's far from perfect.</p>
-          <p><small>Source: <a href="http://sunlightfoundation.com/blog/2012/01/19/dont-use-zipcodes/">Don't Use Zipcodes</a></small></p>
-          <hr>
-        </article>      
-      </section>
       <!-- empty container -->
-      <section id="results">
-      </section>
+      <section id="results"></section>
     </div>
   </section>
 

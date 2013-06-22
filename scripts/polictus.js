@@ -16,10 +16,8 @@ app.polictus = (function () {
 	// var SUNLIGHT_API_KEY = "6cd4ec29bfbf46819f41b6ae97b575af"; // eric's key
 	var SUNLIGHT_API_KEY = '&apikey=380054b03efa4f4191c92664fc42904d'; // luis' key
 
-
 	// govtrack
 	var GOVTRACK_API_URL = 'http://www.govtrack.us/api/v2/';
-
 
 	// opensecret
 	var OPENSECRET_API_URL = "http://www.opensecrets.org/api/";
@@ -45,23 +43,15 @@ app.polictus = (function () {
 	 	// store it
 		localStorage.setItem('polictus', JSON.stringify(polictus));
 	 	
-	 	// ================ debugging =================
-	 	console.log('latitude: '+_latitude+'\nlongitude: '+_longitude);
-	 	// ============================================
-
 	 	// make Sunlight API call
 		$.ajax({
 		  url: SUNLIGHT_API_URL + 'legislators/' + 'locate?latitude='+ _latitude + '&longitude=' + _longitude + SUNLIGHT_API_KEY ,
 		  context: document.body
 		}).done(
 			function(data){
-				console.log(data);
 				parseJSON('sunlight', data);
 			}
 		);
-
-		/* ----------- process ------------ */
-		/* sunlight --> wikipedia --> gov track & influence explorer */
 	}
  	/* ============== end constructor =============== */
 

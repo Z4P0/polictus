@@ -22,17 +22,6 @@ app.main = (function(){
 		// geocode setup
 		geocoder = new google.maps.Geocoder();
 
-		// hook up UI
-		// document.getElementsByClassName('icon-location-arrow')[0].addEventListener('click', function() {
-		// 	alert('thing');
-		// 	show('address_form');
-		// } , false);
-
-		// var addInterest = document.getElementsByClassName('icon-plus')[0];
-		// console.log(addInterest);
-		// addInterest.addEventListener('click', function(e){alert('thing');}, false);
-
-
 		// is there polictus data?
 		// ===================================
 		if (localStorage.getItem('polictus') === null) show('start'); // no polictus data. create it
@@ -67,7 +56,7 @@ app.main = (function(){
 			// <p class="app_details">We search by using your geolocation.<br><span class="mimic_link">Search for a different location</span></p>
 			var p1 = element('p','We search by using your geolocation.');
 					p1.className += 'app_details';
-			var span1 = element('span','Search for a different location');
+					var span1 = element('span','Search for a different location');
 					span1.className += 'mimic_link';
 					span1.addEventListener('click', function() {$("#address_form").slideToggle();}, false );
 					p1.appendChild(document.createElement('br'));
@@ -77,16 +66,16 @@ app.main = (function(){
 			// <div id="address_form"> <input id="address" type="text" placeholder=" ex. 742 Evergreen Terrace, Springfield"><br> <input type="button" value="Search" id="address_btn"> </div>
       var div = element('div');
       		div.id = 'address_form';
-      var p = element('p', 'Please enter a street address or city name and state');
+		      var p = element('p', 'Please enter a street address or city name and state');
       		div.appendChild(p);
-      var address = element('input');
+		      var address = element('input');
 					address.setAttribute('type','text');
 					address.setAttribute('placeholder',' ex. Oakland NJ');
 					address.setAttribute('id','address');
 					address.addEventListener('keypress', function (e) {if (e.keyCode === 13) {codeAddress(); } }, false);					
 					div.appendChild(address);
 					div.appendChild(document.createElement('br'));
-			var button = element('input');
+					var button = element('input');
 					button.setAttribute('type','button');
 					button.setAttribute('value','Search');
 					button.setAttribute('id','address_btn');
@@ -96,13 +85,35 @@ app.main = (function(){
 			// <p class="app_details"><span class="more-info">Why not <span class="strike-through">zoidberg</span> zipcodes?</span></p>			
 			var p2 = element('p');
 					p2.className += 'app_details';
-			var span2 = element('span');
+					var span2 = element('span');
 					span2.className += 'more-info';
 					// innerHTML.. :/
 					span2.innerHTML = 'Why not <span class="strike-through">zoidberg</span> zipcodes?</span>';
 					span2.addEventListener('click', function() {$("#zipcode-info").slideToggle();}, false );
 					p2.appendChild(span2);
 			frag.appendChild(p2);
+			// <article id="zipcode-info">
+			var article = element('article');
+					article.id='zipcode-info';
+					// <h2>Don't Use Zipcodes</h2>
+					var h2 = element('h2','Don\'t Use Zipcodes');
+					article.appendChild(h2);
+					var p3 = element('p','A zip code may intersect multiple Congressional districts, so locating by zip may return multiple representatives, and possibly more than 2 senators if the zip code crosses state borders.');
+					article.appendChild(p3);
+					var p4 = element('p','The first complication is probably obvious: zip codes and congressional districts aren\'t the same thing. A zip code can span more than one district (or even more than one state!), so if you want to support zip lookups for your users, you\'ll have to support cases where more than one matching district is returned.');
+					article.appendChild(p4);
+					var p5 = element('p','Zip codes are lines, in other words, while congressional districts are polygons. This means that mapping zips to congressional districts is an inherently imperfect process.');
+					article.appendChild(p5);
+					var p6 = element('p','The government uses something called a zip code tabulation area (ZCTA) to approximate the geographic footprint of a given zip as a polygon, and this is what we use to map zip codes to congressional districts. But it really is just an approximation -- it\'s far from perfect.');
+					article.appendChild(p6);
+					// <p><small>Source: <a href="http://sunlightfoundation.com/blog/2012/01/19/dont-use-zipcodes/">Don't Use Zipcodes</a></small></p>
+					var p7 = element('p','Source: ');
+					p7.className = 'small';
+					p7.appendChild(element('a','http://sunlightfoundation.com/blog/2012/01/19/dont-use-zipcodes/'));
+					article.appendChild(p7);
+					// <hr>
+					article.appendChild(element('hr'));
+			frag.appendChild(article);
 		}
 		// show just the address form
 		// ----------------------------
@@ -110,7 +121,8 @@ app.main = (function(){
 			// <div id="address_form"> <input id="address" type="text" placeholder=" ex. 742 Evergreen Terrace, Springfield"><br> <input type="button" value="Search" id="address_btn"> </div>
       var div = element('div');
       		div.id = 'address_form';
-      var p = element('p', 'Please enter a street address');
+      		div.style.display = 'block';
+      var p = element('p', 'Please enter a city or street address to continue');
       		div.appendChild(p);
       var address = element('input');
 					address.setAttribute('type','text');
@@ -200,11 +212,9 @@ app.main = (function(){
 	  // call APIs -> build polictus obj
 		_polictus = new app.polictus.Polictus(position.coords.latitude,position.coords.longitude);
 	}
-	// in case geo-coding fux up
+	// in case geo-coding fux up/user doesn't want to allow geolocation
 	function geocodeError() {
 		show('address_form');
-		clear(output);
-		output.appendChild(element('p', 'Looks like something went wrong trying to geolocate within your browser. Try entering a street address to continue'));
 	}
 	// enter custom address
 	function codeAddress() {
@@ -239,42 +249,6 @@ app.main = (function(){
 		}
 		// something went wrong
 		else {console.log('herp derp - from build()'); }
-	}
-
-
-	function validate() {
-		// get DOM value
-		var input = document.getElementById('zipcode').value;
-		
-		// make sure it's a string
-		if (typeof input === 'string') {
-			// test for an empty string
-			if (input.length === 0 ) { reportError('Please enter a zipcode to begin. Try 14411'); }
-			else {
-				// trim empty space off of the beginning and end
-				var trimmedInput = trim(input);
-				if (trimmedInput.length !== 5) reportError('There is a problem with the input you have entered');
-				else {
-					var isValid = true;
-					// make sure the input is a zipcode
-					for (var i = 0; i < trimmedInput.length; i++) {
-						// if they can't be parses to ints, it's not valid
-						if (!parseInt(trimmedInput[i])) {
-							isValid = false;
-
-							// weird error when zipcodes start with 0
-							if (parseInt(trimmedInput[i]) === 0) isValid = true;
-						}
-					} // end for loop
-
-					// now that we tested it..
-					if (isValid) callAPIs();
-					else reportError('There is a problem with the zipcode you entered: '+trimmedInput+' is not a valid zipcode.');
-				}
-			}
-		}
-		// idk how you would get to the error below but whatevs
-		else {reportError('you done goofed');}
 	}
 
 	// prints out error message to user

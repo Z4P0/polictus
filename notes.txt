@@ -4,12 +4,15 @@ TODO
 	http://dev.polict.us
 - so what's the site for?
 	what's it offer?
+- find a better way to implement the content we're generating dynamically
+	right now it's a bunch of lines creating elements
+	it works but kinda makes it a pain to write out/edit/debug
 
-FIX
+
+BUGS
 ----------------------------
-- if geolocation is denied by browser, address form does not show
-- "why not zipcodes" is displayed unintentionally sometimes, or left orphaned
 - info from wikipedia is still wonky
+
 
 FEATURE IDEAS
 ----------------------------
@@ -123,3 +126,10 @@ _polictus = new app.polictus.Polictus(results[0].geometry.location.kb,results[0]
 // ^ google changed a letter that broke everything lawl.............. ^
 also, the values had to be switched around
 we were passing in latitude as longitude and vice versa
+
+- if geolocation is denied by browser, address form does not show
+	we hide the original 'address_form' via CSS so that it can be toggled into view via JS
+	this was hiding the subsequent 'address_form' when the user denied using HTML5 geolocation
+	the fix:
+		adding the style inline when we create the element dynamically
+		div.style.display = 'block';
